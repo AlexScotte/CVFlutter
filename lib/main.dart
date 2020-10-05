@@ -20,8 +20,14 @@ class MyApp extends StatelessWidget {
       builder: (context, appState, child) {
         return MaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData.light().copyWith(
+            accentColor: Colors.blue[900],
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            accentColor: Colors.cyanAccent[400],
+            iconTheme: IconThemeData(color: Colors.white),
+          ),
           themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: MyHomePage(title: 'Flutter Demo Home Page'),
         );
