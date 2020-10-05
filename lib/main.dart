@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'notifiers/AppStateNotifier.dart';
-import 'pages/homepage/homepage.dart';
+import 'pages/homepage.dart';
 
 void main() {
   runApp(
