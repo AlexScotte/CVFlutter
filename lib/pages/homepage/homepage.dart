@@ -12,9 +12,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  BottomNavigationBar bottomNavigationBar;
+
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold = Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -26,6 +30,51 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedItemColor: Theme.of(context).accentColor,
+        currentIndex: _selectedIndex,
+        onTap: onNavigationBarItemTapped,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person,
+                color: _selectedIndex == 0
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).iconTheme.color),
+            title: Text(""),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.work,
+                color: _selectedIndex == 1
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).iconTheme.color),
+            title: Text(""),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school,
+                color: _selectedIndex == 2
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).iconTheme.color),
+            title: Text(""),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.alternate_email,
+                color: _selectedIndex == 3
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).iconTheme.color),
+            title: Text(""),
+          ),
+        ],
+      ),
     );
+    return scaffold;
+  }
+
+  void onNavigationBarItemTapped(int newIndex) {
+    setState(() {
+      _selectedIndex = newIndex;
+    });
   }
 }
