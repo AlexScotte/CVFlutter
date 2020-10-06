@@ -1,4 +1,25 @@
 {
-    "text1": "Bonjour",
-    "text2": "Monde"
-  }
+  "app_name": "CVFlutter",
+  "global_accept": "Accepter",
+  "global_shutdown": "Fermer l'application",
+  "global_continue": "Continuer quand même",
+  "warning_no_connection_title": "Aucune connexion",
+  "warning_no_data_connection_desc": "Attention, vous n'êtes pas connecté à internet et aucune données n'a été enregistrées.\n\nVeuillez vous connecter à internet et redémarrer l'application",
+  "warning_no_connection_new_version_desc": "Attention, vous n'êtes pas connecté à internet.\n\nLes données affichées ne sont peut-être pas à jour",
+  "title_profile": "Profil",
+  "title_experiences": "Experiences",
+  "me_profile": "Profil :",
+  "me_skills": "Compétences :",
+  "me_hobbies": "Centres d'intérêt :",
+  "xp_details_context": "Contexte :",
+  "xp_details_mission": "Missions :",
+  "xp_details_skills": "Compétences :",
+  "title_contact": "Contact",
+  "title_formation": "Formation",
+  "title_view_experiences": "Mes expériences professionnelles",
+  "title_view_formation": "Mon parcours",
+  "title_view_contact": "Pour me contacter",
+  "contact_download": "Télécharger mon CV",
+  "toolbar_search": "Rechercher une compétence",
+  "app_settings_mode_dark": "Mode sombre"
+}
