@@ -6,6 +6,8 @@ import 'package:cvflutter/pages/navigation_pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../app_localizations.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: navigationPages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         selectedItemColor: Theme.of(context).accentColor,
         currentIndex: selectedIndex,
@@ -44,28 +46,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: selectedIndex == 0
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title: Text(""),
+            title:
+                Text(AppLocalizations.of(context).translate('title_profile')),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work,
                 color: selectedIndex == 1
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title: Text(""),
+            title: Text(
+                AppLocalizations.of(context).translate('title_experiences')),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school,
                 color: selectedIndex == 2
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title: Text(""),
+            title:
+                Text(AppLocalizations.of(context).translate('title_formation')),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.alternate_email,
                 color: selectedIndex == 3
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title: Text(""),
+            title:
+                Text(AppLocalizations.of(context).translate('title_contact')),
           ),
         ],
       ),
