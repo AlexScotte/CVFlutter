@@ -1,3 +1,5 @@
+import 'package:cvflutter/model/skill.dart';
+
 import 'hobby.dart';
 
 class Profile {
@@ -11,6 +13,7 @@ class Profile {
   String job;
   String lastName;
   String location;
+  List<Skill> distinctSkills;
 
   Profile(
       {this.age,

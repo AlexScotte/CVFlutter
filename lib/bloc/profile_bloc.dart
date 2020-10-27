@@ -12,7 +12,8 @@ class ProfileBloc {
   Observable<Profile> get profile => _fetcher.stream;
 
   fetchProfile() async {
-    Profile response = await _repository.fetchProfile();
+    Profile response = await _repository.getProfile();
+    response.distinctSkills = await _repository.getDistinctSkills();
     _fetcher.sink.add(response);
   }
 
