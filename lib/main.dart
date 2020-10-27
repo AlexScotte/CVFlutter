@@ -50,13 +50,18 @@ class MyApp extends StatelessWidget {
             return supportedLocales.first;
           },
           theme: ThemeData.light().copyWith(
-            accentColor: Colors.blue[900],
-            iconTheme: IconThemeData(color: Colors.black),
-          ),
+              accentColor: Colors.blue[900],
+              iconTheme: IconThemeData(color: Colors.black),
+              textTheme: TextTheme(
+                  body1: TextStyle(fontSize: 12, color: Colors.black),
+                  title: TextStyle(fontSize: 18, color: Colors.blue[900]))),
           darkTheme: ThemeData.dark().copyWith(
-            accentColor: Colors.cyanAccent[400],
-            iconTheme: IconThemeData(color: Colors.white),
-          ),
+              accentColor: Colors.cyanAccent[400],
+              iconTheme: IconThemeData(color: Colors.white),
+              textTheme: TextTheme(
+                  body1: TextStyle(fontSize: 12, color: Colors.white),
+                  title:
+                      TextStyle(fontSize: 14, color: Colors.cyanAccent[400]))),
           themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: MyHomePage(),
         );
