@@ -17,7 +17,8 @@ class _ContactPageState extends State<ContactPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-            AppLocalizations.of(context).translate('title_view_contact')),
+            AppLocalizations.of(context).translate('title_view_contact'),
+            style: Theme.of(context).textTheme.headline),
       ),
       body: new Center(
         child: new Text("Contact page"),

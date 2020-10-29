@@ -17,7 +17,8 @@ class _ExperiencePageState extends State<ExperiencePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-            AppLocalizations.of(context).translate('title_view_experiences')),
+            AppLocalizations.of(context).translate('title_view_experiences'),
+            style: Theme.of(context).textTheme.headline),
       ),
       body: new Center(
         child: new Text("Experiences page"),

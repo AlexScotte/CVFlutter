@@ -17,7 +17,8 @@ class _FormationsPageState extends State<FormationsPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-            AppLocalizations.of(context).translate('title_view_formation')),
+            AppLocalizations.of(context).translate('title_view_formation'),
+            style: Theme.of(context).textTheme.headline),
       ),
       body: new Center(
         child: new Text("Formations page"),
