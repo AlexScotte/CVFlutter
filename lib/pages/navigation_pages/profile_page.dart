@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildHobbiesChips(Profile data) {
     if (data != null || data.hobbies != null) {
-      return this.buildChips(data.hobbies.map((sk) => sk.name).toList());
+      return this.buildChips(data.hobbies.map((hob) => hob.name).toList());
     } else {
       return null;
     }
