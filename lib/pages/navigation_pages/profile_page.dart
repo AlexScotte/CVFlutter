@@ -51,36 +51,45 @@ class _ProfilePageState extends State<ProfilePage> {
 
   SingleChildScrollView buildProfileScreen(Profile data) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        padding: EdgeInsets.only(bottom: 30.0),
+        child: Column(
           children: <Widget>[
             buildImageHeader(data),
             Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Text(data.job.toUpperCase(),
-                      style: Theme.of(context).textTheme.title)
-                ]),
-            Padding(padding: EdgeInsets.only(top: 10.0)),
-            buildLocationRow(data),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Text(AppLocalizations.of(context).translate('me_profile'),
-                style: Theme.of(context).textTheme.title),
-            Padding(padding: EdgeInsets.only(top: 5.0)),
-            new Text(data.description),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Text(AppLocalizations.of(context).translate('me_skills'),
-                style: Theme.of(context).textTheme.title),
-            buildSkillsChips(data),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Text(AppLocalizations.of(context).translate('me_hobbies'),
-                style: Theme.of(context).textTheme.title),
-            buildHobbiesChips(data),
-          ]),
-    );
+            new Container(
+              padding: const EdgeInsets.all(10.0),
+              child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Text(data.job.toUpperCase(),
+                              style: Theme.of(context).textTheme.title)
+                        ]),
+                    Padding(padding: EdgeInsets.only(top: 10.0)),
+                    buildLocationRow(data),
+                    Padding(padding: EdgeInsets.only(top: 20.0)),
+                    new Text(
+                        AppLocalizations.of(context).translate('me_profile'),
+                        style: Theme.of(context).textTheme.title),
+                    Padding(padding: EdgeInsets.only(top: 5.0)),
+                    new Text(data.description),
+                    Padding(padding: EdgeInsets.only(top: 20.0)),
+                    new Text(
+                        AppLocalizations.of(context).translate('me_skills'),
+                        style: Theme.of(context).textTheme.title),
+                    buildSkillsChips(data),
+                    Padding(padding: EdgeInsets.only(top: 20.0)),
+                    new Text(
+                        AppLocalizations.of(context).translate('me_hobbies'),
+                        style: Theme.of(context).textTheme.title),
+                    buildHobbiesChips(data),
+                  ]),
+            ),
+          ],
+        ));
   }
 
   Container buildImageHeader(Profile data) {
