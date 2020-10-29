@@ -1,8 +1,9 @@
 import 'package:cvflutter/bloc/profile_bloc.dart';
 import 'package:cvflutter/model/profile.dart';
+import 'package:cvflutter/notifiers/AppStateNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:provider/provider.dart';
 import '../../app_localizations.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -29,9 +30,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     return new Text("");
                   } else {
                     return new Text(
-                        "${snapshot.data.firstName} ${snapshot.data.lastName}");
+                        "${snapshot.data.firstName} ${snapshot.data.lastName}",
+                        style: Theme.of(context).textTheme.headline);
                   }
-                })),
+                }),
+            actions: buildAppBarActions()),
         body: new Center(
           child: StreamBuilder(
               stream: profileBloc.profile,
@@ -57,7 +60,10 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(padding: EdgeInsets.only(top: 20.0)),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[new Text(data.job)]),
+                children: <Widget>[
+                  new Text(data.job.toUpperCase(),
+                      style: Theme.of(context).textTheme.title)
+                ]),
             Padding(padding: EdgeInsets.only(top: 10.0)),
             buildLocationRow(data),
             Padding(padding: EdgeInsets.only(top: 20.0)),
@@ -134,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var item = items[i];
       ChoiceChip choiceChip = ChoiceChip(
         selected: false,
-        label: Text(item),
+        label: Text(item, style: Theme.of(context).textTheme.body2),
         shadowColor: Colors.transparent,
       );
 
@@ -152,5 +158,41 @@ class _ProfilePageState extends State<ProfilePage> {
             children: chips,
           )
         ]);
+  }
+
+  List<Widget> buildAppBarActions() {
+    List<Widget> appBarActions = new List<Widget>();
+
+    var isDarkModeOn = Provider.of<AppStateNotifier>(context).isDarkModeOn;
+
+    var moreButtons = new PopupMenuButton(
+      onSelected: (idx) {
+        if (idx == 2) {
+          this.onThemeChanged(isDarkModeOn);
+        }
+      },
+      itemBuilder: (context) {
+        var list = List<PopupMenuEntry<int>>();
+        list.add(
+          CheckedPopupMenuItem(
+            child: new Text(
+                AppLocalizations.of(context)
+                    .translate('app_settings_mode_dark'),
+                style: Theme.of(context).textTheme.body1),
+            value: 2,
+            checked: isDarkModeOn,
+          ),
+        );
+        return list;
+      },
+      icon: Icon(Icons.more_vert, color: Theme.of(context).iconTheme.color),
+    );
+
+    appBarActions.add(moreButtons);
+    return appBarActions;
+  }
+
+  void onThemeChanged(bool isDarkModeOn) {
+    Provider.of<AppStateNotifier>(context).updateTheme(!isDarkModeOn);
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppStateNotifier extends ChangeNotifier {
-  bool isDarkMode = false;
+  bool isDarkModeOn = false;
 
   void updateTheme(bool isDarkMode) {
-    this.isDarkMode = isDarkMode;
+    this.isDarkModeOn = isDarkMode;
     notifyListeners();
   }
 }
