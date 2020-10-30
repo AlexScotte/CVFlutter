@@ -9,6 +9,7 @@ class Company {
   String job;
   String name;
   String town;
+  bool isExpanded = true;
 
   Company(
       {this.clients,
