@@ -54,16 +54,25 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.blue[900],
               iconTheme: IconThemeData(color: Colors.black),
               textTheme: TextTheme(
-                  title: TextStyle(fontSize: 18, color: Colors.blue[900]),
-                  headline: TextStyle(fontSize: 18, color: Colors.black),
-                  body1: TextStyle(fontSize: 14, color: Colors.black),
-                  body2: TextStyle(fontSize: 12, color: Colors.black))),
+                title: TextStyle(fontSize: 18, color: Colors.blue[900]),
+                subtitle: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                    fontStyle: FontStyle.italic),
+                headline: TextStyle(fontSize: 18, color: Colors.black),
+                body1: TextStyle(fontSize: 14, color: Colors.black),
+                body2: TextStyle(fontSize: 12, color: Colors.black),
+              )),
 
           darkTheme: ThemeData.dark().copyWith(
               accentColor: Colors.cyanAccent[400],
               iconTheme: IconThemeData(color: Colors.white),
               textTheme: TextTheme(
                 title: TextStyle(fontSize: 18, color: Colors.cyanAccent[400]),
+                subtitle: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
                 headline: TextStyle(fontSize: 18, color: Colors.white),
                 body1: TextStyle(fontSize: 14, color: Colors.white),
                 body2: TextStyle(fontSize: 12, color: Colors.white),
