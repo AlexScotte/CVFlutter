@@ -44,7 +44,6 @@ class _ExperiencePageState extends State<ExperiencePage> {
   }
 
   Widget _buildListPanel(List<Company> companies) {
-    var test = companies.map<bool>((Company c) => c.isExpanded).toList();
     return ExpansionPanelList(
         expansionCallback: (int index, bool isExpanded) {
           setState(() {
