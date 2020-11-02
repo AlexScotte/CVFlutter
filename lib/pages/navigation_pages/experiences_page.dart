@@ -3,6 +3,7 @@ import 'package:cvflutter/bloc/experiences_bloc.dart';
 import 'package:cvflutter/helpers/widget_helper.dart';
 import 'package:cvflutter/model/client.dart';
 import 'package:cvflutter/model/company.dart';
+import 'package:cvflutter/pages/navigation_pages/experience_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -219,26 +220,38 @@ class _ExperiencePageState extends State<ExperiencePage> {
             .where((c) => c.name.toLowerCase() != "perso")
             .map<Widget>((Client client) {
       return new ListTile(
+          onTap: () {
+            this.onExperienceSelected(client);
+          },
           title: new Container(
-        padding: const EdgeInsets.only(left: 0.0),
-        child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Text(client.name,
-                  style: Theme.of(context).textTheme.headline),
-              Padding(padding: EdgeInsets.only(top: 5.0)),
-              if (client.experience.duration != null &&
-                  client.experience.duration.isNotEmpty)
-                new Text("(${client.experience.duration})",
-                    style: Theme.of(context).textTheme.subtitle),
-              WidgetHelper.buildChips(
-                  context,
-                  client.experience.skills
-                      .where((sk) => sk.important == 1)
-                      .map((sk) => sk.name)
-                      .toList()),
-            ]),
-      ));
+            padding: const EdgeInsets.only(left: 0.0),
+            child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(client.name,
+                      style: Theme.of(context).textTheme.headline),
+                  Padding(padding: EdgeInsets.only(top: 5.0)),
+                  if (client.experience.duration != null &&
+                      client.experience.duration.isNotEmpty)
+                    new Text("(${client.experience.duration})",
+                        style: Theme.of(context).textTheme.subtitle),
+                  WidgetHelper.buildChips(
+                      context,
+                      client.experience.skills
+                          .where((sk) => sk.important == 1)
+                          .map((sk) => sk.name)
+                          .toList()),
+                ]),
+          ));
     }).toList());
+  }
+
+  void onExperienceSelected(Client client) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new ExperienceDetailsPage(
+                  client: client,
+                )));
   }
 }
