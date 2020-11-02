@@ -1,10 +1,9 @@
+import 'package:cvflutter/app_localizations.dart';
 import 'package:cvflutter/bloc/experiences_bloc.dart';
 import 'package:cvflutter/model/client.dart';
 import 'package:cvflutter/model/company.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import '../../app_localizations.dart';
 
 class ExperiencePage extends StatefulWidget {
   ExperiencePage({Key key, this.title}) : super(key: key);
@@ -15,25 +14,69 @@ class ExperiencePage extends StatefulWidget {
 }
 
 class _ExperiencePageState extends State<ExperiencePage> {
+  final TextEditingController _searchQuery = new TextEditingController();
   ExperiencesBloc xpBloc = new ExperiencesBloc();
   List<Company> _companies;
+  Icon _actionIcon;
+  Icon _actionSearchIcon;
+  Widget _appBarTitle;
+  bool _isSearching = false;
+  String _searchText = "";
+  int _count = 0;
+
+  _ExperiencePageState() {
+    _searchQuery.addListener(() {
+      if (_searchQuery.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+        });
+      } else {
+        setState(() {
+          _isSearching = true;
+          _searchText = _searchQuery.text;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_companies == null) xpBloc.fetchCompanies();
 
+    if (!_isSearching) {
+      _appBarTitle = new Text(
+          AppLocalizations.of(context).translate('title_view_experiences'),
+          style: Theme.of(context).textTheme.headline);
+      _actionSearchIcon =
+          new Icon(Icons.search, color: Theme.of(context).iconTheme.color);
+      _actionIcon = _actionSearchIcon;
+    }
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(
-            AppLocalizations.of(context).translate('title_view_experiences'),
-            style: Theme.of(context).textTheme.headline),
+        title: _appBarTitle,
+        actions: <Widget>[
+          IconButton(
+            icon: _actionIcon,
+            onPressed: () {
+              setState(() {
+                if (_actionIcon.icon == Icons.search) {
+                  _searchIconClicked();
+                } else {
+                  _resetTextIconClicked();
+                }
+              });
+            },
+          ),
+        ],
       ),
       body: new SingleChildScrollView(
         child: StreamBuilder(
             stream: xpBloc.companies,
             builder: (context, AsyncSnapshot<List<Company>> snapshot) {
               if (snapshot.hasData) {
-                _companies = snapshot.data;
-                return _buildListPanel(snapshot.data);
+                _companies = snapshot.data.reversed.toList();
+                return _buildListPanel(
+                    _isSearching ? _buildSearchList() : _companies);
               } else if (snapshot.hasError) {
                 return new Text(snapshot.error.toString());
               }
@@ -43,14 +86,104 @@ class _ExperiencePageState extends State<ExperiencePage> {
     );
   }
 
+  List<Company> _buildSearchList() {
+    if (_searchText.isEmpty) {
+      return _companies;
+    } else {
+      var _tempCompanies = new List<Company>();
+
+      for (var i = 0; i < _companies.length; i++) {
+        var originCompany = _companies[i];
+        var cloneCompany = new Company(
+            clients: new List<Client>(),
+            dateEnd: originCompany.dateEnd,
+            dateStart: originCompany.dateStart,
+            department: originCompany.department,
+            id: originCompany.id,
+            job: originCompany.job,
+            name: originCompany.name,
+            town: originCompany.town);
+        cloneCompany.isExpanded = originCompany.isExpanded;
+
+        var originClients = originCompany.clients
+            .where((c) => c.name.toLowerCase() != "perso")
+            .toList();
+
+        for (var j = 0; j < originClients.length; j++) {
+          var originClient = originClients[j];
+          bool isMatching = originClient.experience?.skills?.any((sk) =>
+              sk.name.toLowerCase().contains(_searchText.toLowerCase()));
+          if (isMatching) {
+            cloneCompany.clients.add(originClient);
+          }
+        }
+
+        if (cloneCompany.clients.isNotEmpty) {
+          _tempCompanies.add(cloneCompany);
+        }
+      }
+      return _tempCompanies;
+    }
+  }
+
+  void _searchIconClicked() {
+    _actionIcon = new Icon(
+      Icons.close,
+      color: Theme.of(context).iconTheme.color,
+    );
+    _appBarTitle = new Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        IconButton(
+          icon: new Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          onPressed: () {
+            setState(() {
+              _isSearching = false;
+              _searchQuery.clear();
+            });
+          },
+        ),
+        Expanded(
+            child: new TextField(
+          controller: _searchQuery,
+          style: Theme.of(context).textTheme.headline,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search, color: Colors.grey[400]),
+              hintText:
+                  AppLocalizations.of(context).translate('toolbar_search'),
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .headline
+                  .copyWith(fontSize: 14, color: Colors.grey[400])),
+        ))
+      ],
+    );
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void _resetTextIconClicked() {
+    setState(() {
+      _searchQuery.clear();
+    });
+  }
+
   Widget _buildListPanel(List<Company> companies) {
     return ExpansionPanelList(
+        // 01/11/20: Change the key every time the expansion panel is built
+        // used to resolve this crash https://github.com/flutter/flutter/issues/13780
+        key: Key("${++_count}"),
         expansionCallback: (int index, bool isExpanded) {
           setState(() {
-            companies.reversed.toList()[index].isExpanded = !isExpanded;
+            _companies[index].isExpanded = !isExpanded;
           });
         },
-        children: companies.reversed.map<ExpansionPanel>((Company company) {
+        children: companies.map<ExpansionPanel>((Company company) {
           return _buildHeader(company);
         }).toList());
   }
