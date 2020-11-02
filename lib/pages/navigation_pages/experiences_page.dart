@@ -1,5 +1,6 @@
 import 'package:cvflutter/app_localizations.dart';
 import 'package:cvflutter/bloc/experiences_bloc.dart';
+import 'package:cvflutter/helpers/widget_helper.dart';
 import 'package:cvflutter/model/client.dart';
 import 'package:cvflutter/model/company.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class ExperiencePage extends StatefulWidget {
 
 class _ExperiencePageState extends State<ExperiencePage> {
   final TextEditingController _searchQuery = new TextEditingController();
-  ExperiencesBloc xpBloc = new ExperiencesBloc();
+  ExperiencesBloc _xpBloc = new ExperiencesBloc();
   List<Company> _companies;
   Icon _actionIcon;
   Icon _actionSearchIcon;
@@ -41,7 +42,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_companies == null) xpBloc.fetchCompanies();
+    if (_companies == null) _xpBloc.fetchCompanies();
 
     if (!_isSearching) {
       _appBarTitle = new Text(
@@ -71,7 +72,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
       ),
       body: new SingleChildScrollView(
         child: StreamBuilder(
-            stream: xpBloc.companies,
+            stream: _xpBloc.companies,
             builder: (context, AsyncSnapshot<List<Company>> snapshot) {
               if (snapshot.hasData) {
                 _companies = snapshot.data.reversed.toList();
@@ -80,7 +81,10 @@ class _ExperiencePageState extends State<ExperiencePage> {
               } else if (snapshot.hasError) {
                 return new Text(snapshot.error.toString());
               }
-              return new Center(child: CircularProgressIndicator());
+              return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Center(child: CircularProgressIndicator()));
             }),
       ),
     );
@@ -227,39 +231,14 @@ class _ExperiencePageState extends State<ExperiencePage> {
                   client.experience.duration.isNotEmpty)
                 new Text("(${client.experience.duration})",
                     style: Theme.of(context).textTheme.subtitle),
-              _buildChips(client.experience.skills
-                  .where((sk) => sk.important == 1)
-                  .map((sk) => sk.name)
-                  .toList()),
+              WidgetHelper.buildChips(
+                  context,
+                  client.experience.skills
+                      .where((sk) => sk.important == 1)
+                      .map((sk) => sk.name)
+                      .toList()),
             ]),
       ));
     }).toList());
-  }
-
-  Widget _buildChips(List<String> items) {
-    List<Widget> chips = new List<Widget>();
-
-    for (int i = 0; i < items.length; i++) {
-      var item = items[i];
-      ChoiceChip choiceChip = ChoiceChip(
-        selected: false,
-        label: Text(item, style: Theme.of(context).textTheme.body2),
-        shadowColor: Colors.transparent,
-      );
-
-      chips.add(choiceChip);
-    }
-
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.start,
-            direction: Axis.horizontal,
-            spacing: 5,
-            runSpacing: -10,
-            children: chips,
-          )
-        ]);
   }
 }

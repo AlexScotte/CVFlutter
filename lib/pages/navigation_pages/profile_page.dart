@@ -1,4 +1,5 @@
 import 'package:cvflutter/bloc/profile_bloc.dart';
+import 'package:cvflutter/helpers/widget_helper.dart';
 import 'package:cvflutter/model/profile.dart';
 import 'package:cvflutter/notifiers/AppStateNotifier.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +16,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  ProfileBloc profileBloc = new ProfileBloc();
+  ProfileBloc _profileBloc = new ProfileBloc();
 
   @override
   Widget build(BuildContext context) {
-    profileBloc.fetchProfile();
+    _profileBloc.fetchProfile();
 
     return new Scaffold(
         appBar: AppBar(
             title: StreamBuilder<Profile>(
-                stream: profileBloc.profile,
+                stream: _profileBloc.profile,
                 builder: (context, snapshot) {
                   if (snapshot == null || snapshot.data == null) {
                     return new Text("");
@@ -34,13 +35,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: Theme.of(context).textTheme.headline);
                   }
                 }),
-            actions: buildAppBarActions()),
+            actions: _buildAppBarActions()),
         body: new Center(
           child: StreamBuilder(
-              stream: profileBloc.profile,
+              stream: _profileBloc.profile,
               builder: (context, AsyncSnapshot<Profile> snapshot) {
                 if (snapshot.hasData) {
-                  return buildProfileScreen(snapshot.data);
+                  return _buildProfileScreen(snapshot.data);
                 } else if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
                 }
@@ -49,12 +50,12 @@ class _ProfilePageState extends State<ProfilePage> {
         ));
   }
 
-  SingleChildScrollView buildProfileScreen(Profile data) {
+  SingleChildScrollView _buildProfileScreen(Profile data) {
     return SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 30.0),
         child: Column(
           children: <Widget>[
-            buildImageHeader(data),
+            _buildImageHeader(data),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             new Container(
               padding: const EdgeInsets.all(10.0),
@@ -69,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: Theme.of(context).textTheme.title)
                         ]),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
-                    buildLocationRow(data),
+                    _buildLocationRow(data),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Text(
                         AppLocalizations.of(context).translate('me_profile'),
@@ -80,19 +81,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     new Text(
                         AppLocalizations.of(context).translate('me_skills'),
                         style: Theme.of(context).textTheme.title),
-                    buildSkillsChips(data),
+                    _buildSkillsChips(data),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     new Text(
                         AppLocalizations.of(context).translate('me_hobbies'),
                         style: Theme.of(context).textTheme.title),
-                    buildHobbiesChips(data),
+                    _buildHobbiesChips(data),
                   ]),
             ),
           ],
         ));
   }
 
-  Container buildImageHeader(Profile data) {
+  Container _buildImageHeader(Profile data) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 150,
@@ -116,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildLocationRow(Profile data) {
+  Widget _buildLocationRow(Profile data) {
     return new Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -126,50 +127,25 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildSkillsChips(Profile data) {
+  Widget _buildSkillsChips(Profile data) {
     if (data != null || data.distinctSkills != null) {
-      return this.buildChips(data.distinctSkills.map((sk) => sk.name).toList());
+      return WidgetHelper.buildChips(
+          context, data.distinctSkills.map((sk) => sk.name).toList());
     } else {
       return null;
     }
   }
 
-  Widget buildHobbiesChips(Profile data) {
+  Widget _buildHobbiesChips(Profile data) {
     if (data != null || data.hobbies != null) {
-      return this.buildChips(data.hobbies.map((hob) => hob.name).toList());
+      return WidgetHelper.buildChips(
+          context, data.hobbies.map((hob) => hob.name).toList());
     } else {
       return null;
     }
   }
 
-  Widget buildChips(List<String> items) {
-    List<Widget> chips = new List<Widget>();
-
-    for (int i = 0; i < items.length; i++) {
-      var item = items[i];
-      ChoiceChip choiceChip = ChoiceChip(
-        selected: false,
-        label: Text(item, style: Theme.of(context).textTheme.body2),
-        shadowColor: Colors.transparent,
-      );
-
-      chips.add(choiceChip);
-    }
-
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.start,
-            direction: Axis.horizontal,
-            spacing: 5,
-            runSpacing: -10,
-            children: chips,
-          )
-        ]);
-  }
-
-  List<Widget> buildAppBarActions() {
+  List<Widget> _buildAppBarActions() {
     List<Widget> appBarActions = new List<Widget>();
 
     var isDarkModeOn = Provider.of<AppStateNotifier>(context).isDarkModeOn;
@@ -177,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var moreButtons = new PopupMenuButton(
       onSelected: (idx) {
         if (idx == 2) {
-          this.onThemeChanged(isDarkModeOn);
+          this._onThemeChanged(isDarkModeOn);
         }
       },
       itemBuilder: (context) {
@@ -201,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return appBarActions;
   }
 
-  void onThemeChanged(bool isDarkModeOn) {
+  void _onThemeChanged(bool isDarkModeOn) {
     Provider.of<AppStateNotifier>(context).updateTheme(!isDarkModeOn);
   }
 }

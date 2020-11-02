@@ -1,10 +1,8 @@
-import 'package:cvflutter/notifiers/AppStateNotifier.dart';
 import 'package:cvflutter/pages/navigation_pages/contact_page.dart';
 import 'package:cvflutter/pages/navigation_pages/experiences_page.dart';
 import 'package:cvflutter/pages/navigation_pages/formations_page.dart';
 import 'package:cvflutter/pages/navigation_pages/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../app_localizations.dart';
 
@@ -20,9 +18,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   BottomNavigationBar bottomNavigationBar;
 
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
 
-  final List<Widget> navigationPages = [
+  final List<Widget> _navigationPages = [
     ProfilePage(),
     ExperiencePage(),
     FormationsPage(),
@@ -32,18 +30,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var scaffold = Scaffold(
-      body: navigationPages[selectedIndex],
+      body: _navigationPages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         selectedItemColor: Theme.of(context).accentColor,
-        currentIndex: selectedIndex,
-        onTap: onNavigationBarItemTapped,
+        currentIndex: _selectedIndex,
+        onTap: _onNavigationBarItemTapped,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person,
-                color: selectedIndex == 0
+                color: _selectedIndex == 0
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
             title:
@@ -51,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work,
-                color: selectedIndex == 1
+                color: _selectedIndex == 1
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
             title: Text(
@@ -59,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school,
-                color: selectedIndex == 2
+                color: _selectedIndex == 2
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
             title:
@@ -67,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.alternate_email,
-                color: selectedIndex == 3
+                color: _selectedIndex == 3
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
             title:
@@ -79,12 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return scaffold;
   }
 
-  void onNavigationBarItemTapped(int newIndex) {
+  void _onNavigationBarItemTapped(int newIndex) {
     // Make a setState to reload widget and:
     // - load the correct navigation page
     // - change color icon in bottom nav bar
     setState(() {
-      selectedIndex = newIndex;
+      _selectedIndex = newIndex;
     });
   }
 }
