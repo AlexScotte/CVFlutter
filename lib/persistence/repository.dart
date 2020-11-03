@@ -1,4 +1,5 @@
 import 'package:cvflutter/model/company.dart';
+import 'package:cvflutter/model/formation.dart';
 import 'package:cvflutter/model/profile.dart';
 import 'package:cvflutter/model/skill.dart';
 import 'api_provider.dart';
@@ -11,4 +12,5 @@ class Repository {
       appApiProvider.fetchDistinctSkills();
 
   Future<List<Company>> getCompanies() => appApiProvider.fetchCompanies();
+  Future<List<Formation>> getFormations() => appApiProvider.fetchFormations();
 }

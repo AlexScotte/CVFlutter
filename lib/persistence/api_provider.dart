@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cvflutter/model/company.dart';
+import 'package:cvflutter/model/formation.dart';
 import 'package:cvflutter/model/skill.dart';
 import 'package:http/http.dart' show Client;
 import 'package:cvflutter/model/profile.dart';
@@ -39,6 +40,19 @@ class ApiProvider {
           .map((i) => new Company.fromJson(i))
           .toList();
       return companies;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Failed to load profile ($error stackTrace: $stacktrace")');
+    }
+  }
+
+  Future<List<Formation>> fetchFormations() async {
+    try {
+      final response = await client.get("$_baseUrl" + "/formations");
+      var formations = (json.decode(response.body) as List)
+          .map((i) => new Formation.fromJson(i))
+          .toList();
+      return formations;
     } catch (error, stacktrace) {
       throw Exception(
           'Failed to load profile ($error stackTrace: $stacktrace")');
