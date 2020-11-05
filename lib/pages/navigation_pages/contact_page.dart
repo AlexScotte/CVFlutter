@@ -71,36 +71,47 @@ class _ContactPageState extends State<ContactPage> {
     var items = new List<Widget>();
     if (contact.phone != null && contact.phone.trim().isNotEmpty) {
       items.add(
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Icon(
-              Icons.phone,
-              color: Theme.of(context).iconTheme.color,
-              size: 30,
-            ),
-            new Padding(padding: EdgeInsets.only(left: 10.0)),
-            new Text(contact.phone,
-                style: Theme.of(context).textTheme.headline),
-          ],
-        ),
+        new InkWell(
+            onTap: () async {
+              if (await canLaunch("tel:${contact.phone}"))
+                await launch("tel:${contact.phone}");
+            },
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Icon(
+                  Icons.phone,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 30,
+                ),
+                new Padding(padding: EdgeInsets.only(left: 10.0)),
+                new Text(contact.phone,
+                    style: Theme.of(context).textTheme.headline),
+              ],
+            )),
       );
       items.add(Padding(padding: EdgeInsets.only(top: 20.0)));
     }
 
     if (contact.email != null && contact.email.trim().isNotEmpty) {
-      items.add(new Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new Icon(
-            Icons.email,
-            color: Theme.of(context).iconTheme.color,
-            size: 30,
-          ),
-          new Padding(padding: EdgeInsets.only(left: 10.0)),
-          new Text(contact.email, style: Theme.of(context).textTheme.headline),
-        ],
-      ));
+      items.add(new InkWell(
+          onTap: () async {
+            var url = 'mailto:${contact.email}';
+            if (await canLaunch(url)) await launch(url);
+          },
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Icon(
+                Icons.email,
+                color: Theme.of(context).iconTheme.color,
+                size: 30,
+              ),
+              new Padding(padding: EdgeInsets.only(left: 10.0)),
+              new Text(contact.email,
+                  style: Theme.of(context).textTheme.headline),
+            ],
+          )));
       items.add(Padding(padding: EdgeInsets.only(top: 20.0)));
     }
 
