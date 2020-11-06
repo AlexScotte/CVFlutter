@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class WidgetHelper {
   static Widget buildChips(BuildContext context, List<String> items) {
-    List<Widget> chips = new List<Widget>();
+    List<Widget> chips = List<Widget>();
 
     for (int i = 0; i < items.length; i++) {
       var item = items[i];

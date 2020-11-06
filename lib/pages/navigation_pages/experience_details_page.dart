@@ -17,9 +17,9 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
   Widget build(BuildContext context) {
     var client = widget.client;
 
-    return new Scaffold(
+    return Scaffold(
       appBar: AppBar(
-          title: new Text(
+          title: Text(
             client.name.toUpperCase(),
             style: Theme.of(context).textTheme.headline,
           ),
@@ -33,7 +33,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
         padding: EdgeInsets.only(bottom: 30.0),
         child: Column(
           children: <Widget>[
-            new Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 InkWell(
@@ -41,35 +41,35 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
                       if (await canLaunch(client.site))
                         await launch(client.site);
                     },
-                    child: new Container(
+                    child: Container(
                         width: 200.0,
                         height: 75.0,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            image: new DecorationImage(
+                            image: DecorationImage(
                                 fit: BoxFit.scaleDown,
-                                image: new NetworkImage(client.imageUrl))))),
+                                image: NetworkImage(client.imageUrl))))),
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Container(
+            Container(
               padding: const EdgeInsets.all(10.0),
-              child: new Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    new Row(
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          new Column(
+                          Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                new Text(client.experience.job.toUpperCase(),
+                                Text(client.experience.job.toUpperCase(),
                                     style: Theme.of(context).textTheme.title),
                                 Padding(padding: EdgeInsets.only(top: 10.0)),
                                 if (client.experience.duration != null &&
                                     client.experience.duration.isNotEmpty)
-                                  new Text(
+                                  Text(
                                     "(${client.experience.duration})",
                                   ),
                               ])
@@ -77,7 +77,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     _buildContextRow(client),
                     _buildMissionRow(client),
-                    new Text(
+                    Text(
                         AppLocalizations.of(context)
                             .translate('xp_details_skills'),
                         style: Theme.of(context).textTheme.title),
@@ -94,36 +94,36 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
   }
 
   Widget _buildContextRow(Client client) {
-    var children = new List<Widget>();
+    var children = List<Widget>();
     if (client.experience.details.context != null &&
         client.experience.details.context.isNotEmpty) {
-      children.add(new Text(
+      children.add(Text(
           AppLocalizations.of(context).translate('xp_details_context'),
           style: Theme.of(context).textTheme.title));
       children.add(Padding(padding: EdgeInsets.only(top: 20.0)));
-      children.add(
-          new Text(client.experience.details.context.replaceAll("\\n", "\n")));
+      children
+          .add(Text(client.experience.details.context.replaceAll("\\n", "\n")));
       children.add(Padding(padding: EdgeInsets.only(top: 30.0)));
     }
 
-    return new Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: children);
   }
 
   Widget _buildMissionRow(Client client) {
-    var children = new List<Widget>();
+    var children = List<Widget>();
     if (client.experience.details.missions != null &&
         client.experience.details.missions.isNotEmpty) {
-      children.add(new Text(
+      children.add(Text(
           AppLocalizations.of(context).translate('xp_details_mission'),
           style: Theme.of(context).textTheme.title));
       children.add(Padding(padding: EdgeInsets.only(top: 20.0)));
       children.add(
-          new Text(client.experience.details.missions.replaceAll("\\n", "\n")));
+          Text(client.experience.details.missions.replaceAll("\\n", "\n")));
       children.add(Padding(padding: EdgeInsets.only(top: 30.0)));
     }
 
-    return new Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: children);
   }
 }

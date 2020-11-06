@@ -16,27 +16,27 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  ProfileBloc _profileBloc = new ProfileBloc();
+  ProfileBloc _profileBloc = ProfileBloc();
 
   @override
   Widget build(BuildContext context) {
     _profileBloc.fetchProfile();
 
-    return new Scaffold(
+    return Scaffold(
         appBar: AppBar(
             title: StreamBuilder<Profile>(
                 stream: _profileBloc.profile,
                 builder: (context, snapshot) {
                   if (snapshot == null || snapshot.data == null) {
-                    return new Text("");
+                    return Text("");
                   } else {
-                    return new Text(
+                    return Text(
                         "${snapshot.data.firstName} ${snapshot.data.lastName}",
                         style: Theme.of(context).textTheme.headline);
                   }
                 }),
             actions: _buildAppBarActions()),
-        body: new Center(
+        body: Center(
           child: StreamBuilder(
               stream: _profileBloc.profile,
               builder: (context, AsyncSnapshot<Profile> snapshot) {
@@ -57,35 +57,32 @@ class _ProfilePageState extends State<ProfilePage> {
           children: <Widget>[
             _buildImageHeader(data),
             Padding(padding: EdgeInsets.only(top: 20.0)),
-            new Container(
+            Container(
               padding: const EdgeInsets.all(10.0),
-              child: new Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    new Row(
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          new Text(data.job.toUpperCase(),
+                          Text(data.job.toUpperCase(),
                               style: Theme.of(context).textTheme.title)
                         ]),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildLocationRow(data),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
-                    new Text(
-                        AppLocalizations.of(context).translate('me_profile'),
+                    Text(AppLocalizations.of(context).translate('me_profile'),
                         style: Theme.of(context).textTheme.title),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
-                    new Text(data.description),
+                    Text(data.description),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
-                    new Text(
-                        AppLocalizations.of(context).translate('me_skills'),
+                    Text(AppLocalizations.of(context).translate('me_skills'),
                         style: Theme.of(context).textTheme.title),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildSkillsChips(data),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
-                    new Text(
-                        AppLocalizations.of(context).translate('me_hobbies'),
+                    Text(AppLocalizations.of(context).translate('me_hobbies'),
                         style: Theme.of(context).textTheme.title),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildHobbiesChips(data),
@@ -99,32 +96,30 @@ class _ProfilePageState extends State<ProfilePage> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 150,
-      decoration: new BoxDecoration(
-          image: new DecorationImage(
-              fit: BoxFit.fill,
-              image: new NetworkImage(data.backgroundImageUrl))),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill, image: NetworkImage(data.backgroundImageUrl))),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Container(
+            Container(
                 width: 110.0,
                 height: 110.0,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new NetworkImage(data.imageUrl)))),
+                    image: DecorationImage(
+                        fit: BoxFit.fill, image: NetworkImage(data.imageUrl)))),
           ]),
     );
   }
 
   Widget _buildLocationRow(Profile data) {
-    return new Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        new Icon(Icons.location_on, color: Theme.of(context).iconTheme.color),
-        new Text(data.location),
+        Icon(Icons.location_on, color: Theme.of(context).iconTheme.color),
+        Text(data.location),
       ],
     );
   }
@@ -148,11 +143,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   List<Widget> _buildAppBarActions() {
-    List<Widget> appBarActions = new List<Widget>();
+    List<Widget> appBarActions = List<Widget>();
 
     var isDarkModeOn = Provider.of<AppStateNotifier>(context).isDarkModeOn;
 
-    var moreButtons = new PopupMenuButton(
+    var moreButtons = PopupMenuButton(
       onSelected: (idx) {
         if (idx == 2) {
           this._onThemeChanged(isDarkModeOn);
@@ -162,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
         var list = List<PopupMenuEntry<int>>();
         list.add(
           CheckedPopupMenuItem(
-            child: new Text(
+            child: Text(
                 AppLocalizations.of(context)
                     .translate('app_settings_mode_dark'),
                 style: Theme.of(context).textTheme.body1),

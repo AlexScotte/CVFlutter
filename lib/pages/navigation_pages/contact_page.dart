@@ -16,23 +16,23 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  ContactBloc _contactBloc = new ContactBloc();
+  ContactBloc _contactBloc = ContactBloc();
   @override
   Widget build(BuildContext context) {
     _contactBloc.fetchContact();
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
             AppLocalizations.of(context).translate('title_view_contact'),
             style: Theme.of(context).textTheme.headline),
       ),
-      body: new StreamBuilder(
+      body: StreamBuilder(
           stream: _contactBloc.contact,
           builder: (context, AsyncSnapshot<Contact> snapshot) {
             if (snapshot.hasData) {
               return _buildBody(snapshot.data);
             } else if (snapshot.hasError) {
-              return new Text(snapshot.error.toString());
+              return Text(snapshot.error.toString());
             }
             return Center(child: CircularProgressIndicator());
           }),
@@ -45,17 +45,16 @@ class _ContactPageState extends State<ContactPage> {
     var leftPadding = w > h ? w * 0.35 : w * 0.10;
     var topPadding = w > h ? 5.0 : 30.0;
     return Column(children: <Widget>[
-      new Expanded(
-          child: new Container(
+      Expanded(
+          child: Container(
         padding: EdgeInsets.only(left: leftPadding, top: topPadding),
         child: _buildListExternalLinks(contact),
       )),
-      new RaisedButton(
-        child: new Text(
-            AppLocalizations.of(context).translate('contact_download'),
-            style: new TextStyle(color: Colors.white)),
-        shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0)),
+      RaisedButton(
+        child: Text(AppLocalizations.of(context).translate('contact_download'),
+            style: TextStyle(color: Colors.white)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         onPressed: () async {
           if (await canLaunch(contact.cvUrl)) await launch(contact.cvUrl);
         },
@@ -66,26 +65,26 @@ class _ContactPageState extends State<ContactPage> {
 
   Widget _buildListExternalLinks(Contact contact) {
     if (contact.externalLinks == null || contact.externalLinks.isEmpty)
-      return new Text("");
+      return Text("");
 
-    var items = new List<Widget>();
+    var items = List<Widget>();
     if (contact.phone != null && contact.phone.trim().isNotEmpty) {
       items.add(
-        new InkWell(
+        InkWell(
             onTap: () async {
               if (await canLaunch("tel:${contact.phone}"))
                 await launch("tel:${contact.phone}");
             },
-            child: new Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                new Icon(
+                Icon(
                   Icons.phone,
                   color: Theme.of(context).iconTheme.color,
                   size: 30,
                 ),
-                new Padding(padding: EdgeInsets.only(left: 10.0)),
-                new Text(contact.phone,
+                Padding(padding: EdgeInsets.only(left: 10.0)),
+                Text(contact.phone,
                     style: Theme.of(context).textTheme.headline),
               ],
             )),
@@ -94,22 +93,21 @@ class _ContactPageState extends State<ContactPage> {
     }
 
     if (contact.email != null && contact.email.trim().isNotEmpty) {
-      items.add(new InkWell(
+      items.add(InkWell(
           onTap: () async {
             var url = 'mailto:${contact.email}';
             if (await canLaunch(url)) await launch(url);
           },
-          child: new Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new Icon(
+              Icon(
                 Icons.email,
                 color: Theme.of(context).iconTheme.color,
                 size: 30,
               ),
-              new Padding(padding: EdgeInsets.only(left: 10.0)),
-              new Text(contact.email,
-                  style: Theme.of(context).textTheme.headline),
+              Padding(padding: EdgeInsets.only(left: 10.0)),
+              Text(contact.email, style: Theme.of(context).textTheme.headline),
             ],
           )));
       items.add(Padding(padding: EdgeInsets.only(top: 20.0)));
@@ -133,22 +131,21 @@ class _ContactPageState extends State<ContactPage> {
     return Center(
         child: Row(
       children: <Widget>[
-        new Container(
+        Container(
             width: 30.0,
             height: 30.0,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                image: new DecorationImage(
+                image: DecorationImage(
                     fit: BoxFit.scaleDown,
-                    image: new NetworkImage(extLink.imageUrl)))),
-        new Padding(padding: EdgeInsets.only(left: 10.0)),
-        new Flexible(
+                    image: NetworkImage(extLink.imageUrl)))),
+        Padding(padding: EdgeInsets.only(left: 10.0)),
+        Flexible(
           child: InkWell(
             onTap: () async {
               if (await canLaunch(extLink.url)) await launch(extLink.url);
             },
-            child:
-                new Text(linkName, style: Theme.of(context).textTheme.headline),
+            child: Text(linkName, style: Theme.of(context).textTheme.headline),
           ),
         )
       ],

@@ -16,14 +16,14 @@ class FormationsPage extends StatefulWidget {
 }
 
 class _FormationsPageState extends State<FormationsPage> {
-  FormationBloc _formationBloc = new FormationBloc();
+  FormationBloc _formationBloc = FormationBloc();
 
   @override
   Widget build(BuildContext context) {
     _formationBloc.fetchFormations();
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
             AppLocalizations.of(context).translate('title_view_formation'),
             style: Theme.of(context).textTheme.headline),
       ),
@@ -33,7 +33,7 @@ class _FormationsPageState extends State<FormationsPage> {
             if (snapshot.hasData) {
               return _buildFormationListUI(snapshot.data.reversed.toList());
             } else if (snapshot.hasError) {
-              return new Text(snapshot.error.toString());
+              return Text(snapshot.error.toString());
             }
             return Container(
                 width: MediaQuery.of(context).size.width,
@@ -44,7 +44,7 @@ class _FormationsPageState extends State<FormationsPage> {
   }
 
   Widget _buildFormationListUI(List<Formation> formations) {
-    return new ListView.builder(
+    return ListView.builder(
       itemCount: formations.length,
       itemBuilder: (context, index) {
         var formation = formations[index];
@@ -56,35 +56,35 @@ class _FormationsPageState extends State<FormationsPage> {
 
         return Row(
           children: <Widget>[
-            new Text(formation.date, style: Theme.of(context).textTheme.title),
-            new Center(
-              child: new CustomPaint(
-                  size: new Size(30, 135),
-                  painter: new CircleWidget(
+            Text(formation.date, style: Theme.of(context).textTheme.title),
+            Center(
+              child: CustomPaint(
+                  size: Size(30, 135),
+                  painter: CircleWidget(
                       circleColor: Theme.of(context).accentColor,
                       isStroke: true,
                       strokeWidth: 3,
                       isFirst: index == 0,
                       isLast: index == formations.length - 1)),
             ),
-            new Flexible(
+            Flexible(
                 child: InkWell(
               onTap: () async {
                 if (await canLaunch(formation.url)) await launch(formation.url);
               },
-              child: new Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 30.0)),
-                  new Text(formation.name,
+                  Text(formation.name,
                       style: Theme.of(context).textTheme.title),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
-                  new Text(itemSubtitle,
+                  Text(itemSubtitle,
                       style: Theme.of(context).textTheme.subtitle),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
                   if (formation.description != null &&
                       formation.description.isNotEmpty)
-                    new Text(formation.description,
+                    Text(formation.description,
                         style: Theme.of(context).textTheme.body1),
                 ],
               ),

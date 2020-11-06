@@ -16,8 +16,8 @@ class ExperiencePage extends StatefulWidget {
 }
 
 class _ExperiencePageState extends State<ExperiencePage> {
-  final TextEditingController _searchQuery = new TextEditingController();
-  ExperiencesBloc _xpBloc = new ExperiencesBloc();
+  final TextEditingController _searchQuery = TextEditingController();
+  ExperiencesBloc _xpBloc = ExperiencesBloc();
   List<Company> _companies;
   Icon _actionIcon;
   Icon _actionSearchIcon;
@@ -46,15 +46,15 @@ class _ExperiencePageState extends State<ExperiencePage> {
     if (_companies == null) _xpBloc.fetchCompanies();
 
     if (!_isSearching) {
-      _appBarTitle = new Text(
+      _appBarTitle = Text(
           AppLocalizations.of(context).translate('title_view_experiences'),
           style: Theme.of(context).textTheme.headline);
       _actionSearchIcon =
-          new Icon(Icons.search, color: Theme.of(context).iconTheme.color);
+          Icon(Icons.search, color: Theme.of(context).iconTheme.color);
       _actionIcon = _actionSearchIcon;
     }
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: _appBarTitle,
         actions: <Widget>[
           IconButton(
@@ -71,7 +71,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
           ),
         ],
       ),
-      body: new SingleChildScrollView(
+      body: SingleChildScrollView(
         child: StreamBuilder(
             stream: _xpBloc.companies,
             builder: (context, AsyncSnapshot<List<Company>> snapshot) {
@@ -80,7 +80,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 return _buildListPanel(
                     _isSearching ? _buildSearchList() : _companies);
               } else if (snapshot.hasError) {
-                return new Text(snapshot.error.toString());
+                return Text(snapshot.error.toString());
               }
               return Container(
                   width: MediaQuery.of(context).size.width,
@@ -95,12 +95,12 @@ class _ExperiencePageState extends State<ExperiencePage> {
     if (_searchText.isEmpty) {
       return _companies;
     } else {
-      var _tempCompanies = new List<Company>();
+      var _tempCompanies = List<Company>();
 
       for (var i = 0; i < _companies.length; i++) {
         var originCompany = _companies[i];
-        var cloneCompany = new Company(
-            clients: new List<Client>(),
+        var cloneCompany = Company(
+            clients: List<Client>(),
             dateEnd: originCompany.dateEnd,
             dateStart: originCompany.dateStart,
             department: originCompany.department,
@@ -132,15 +132,15 @@ class _ExperiencePageState extends State<ExperiencePage> {
   }
 
   void _searchIconClicked() {
-    _actionIcon = new Icon(
+    _actionIcon = Icon(
       Icons.close,
       color: Theme.of(context).iconTheme.color,
     );
-    _appBarTitle = new Row(
+    _appBarTitle = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         IconButton(
-          icon: new Icon(
+          icon: Icon(
             Icons.arrow_back,
             color: Theme.of(context).iconTheme.color,
           ),
@@ -152,11 +152,11 @@ class _ExperiencePageState extends State<ExperiencePage> {
           },
         ),
         Expanded(
-            child: new TextField(
+            child: TextField(
           controller: _searchQuery,
           style: Theme.of(context).textTheme.headline,
-          decoration: new InputDecoration(
-              prefixIcon: new Icon(Icons.search, color: Colors.grey[400]),
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
               hintText:
                   AppLocalizations.of(context).translate('toolbar_search'),
               hintStyle: Theme.of(context)
@@ -194,16 +194,16 @@ class _ExperiencePageState extends State<ExperiencePage> {
   }
 
   ExpansionPanel _buildHeader(Company company) {
-    return new ExpansionPanel(
+    return ExpansionPanel(
         headerBuilder: (BuildContext context, bool isExpanded) {
-          return new ListTile(
-            title: new Column(
+          return ListTile(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Text("${company.job} @ ${company.name}",
+                Text("${company.job} @ ${company.name}",
                     style: Theme.of(context).textTheme.title),
                 Padding(padding: EdgeInsets.only(top: 5.0)),
-                new Text("(${company.dateStart} - ${company.dateEnd})",
+                Text("(${company.dateStart} - ${company.dateEnd})",
                     style: Theme.of(context).textTheme.subtitle),
               ],
             ),
@@ -215,25 +215,25 @@ class _ExperiencePageState extends State<ExperiencePage> {
   }
 
   Widget _buildChildren(List<Client> clients) {
-    return new Column(
+    return Column(
         children: clients.reversed
             .where((c) => c.name.toLowerCase() != "perso")
             .map<Widget>((Client client) {
-      return new ListTile(
+      return ListTile(
           onTap: () {
             this.onExperienceSelected(client);
           },
-          title: new Container(
+          title: Container(
             padding: const EdgeInsets.only(left: 0.0),
-            child: new Column(
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text(client.name,
+                  Text(client.name,
                       style: Theme.of(context).textTheme.headline),
                   Padding(padding: EdgeInsets.only(top: 5.0)),
                   if (client.experience.duration != null &&
                       client.experience.duration.isNotEmpty)
-                    new Text("(${client.experience.duration})",
+                    Text("(${client.experience.duration})",
                         style: Theme.of(context).textTheme.subtitle),
                   WidgetHelper.buildChips(
                       context,
@@ -250,7 +250,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new ExperienceDetailsPage(
+            builder: (context) => ExperienceDetailsPage(
                   client: client,
                 )));
   }

@@ -25,16 +25,15 @@ class CircleWidget extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     // draw circle
-    Offset center = new Offset(size.width / 2, size.height / 2);
+    Offset center = Offset(size.width / 2, size.height / 2);
     var minimum = min(size.width / 2, size.height / 2);
     var radius = minimum - 10;
     canvas.drawCircle(center, radius, paint);
 
     if (!isFirst) {
       // draw top line
-      Offset startingPoint = new Offset(size.width / 2, 0);
-      Offset endingPoint =
-          new Offset(size.width / 2, (size.height / 2) - radius);
+      Offset startingPoint = Offset(size.width / 2, 0);
+      Offset endingPoint = Offset(size.width / 2, (size.height / 2) - radius);
       canvas.drawLine(startingPoint, endingPoint, paint);
     }
 
