@@ -1,3 +1,4 @@
+import 'package:cvflutter/managers/preferences_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,9 @@ import 'app_localizations.dart';
 import 'notifiers/AppStateNotifier.dart';
 import 'pages/homepage.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PreferenceManager().init();
   runApp(
     ChangeNotifierProvider<AppStateNotifier>(
         create: (context) => AppStateNotifier(), child: MyApp()),
@@ -65,7 +68,9 @@ class MyApp extends StatelessWidget {
                 body1: TextStyle(fontSize: 14, color: Colors.white),
                 body2: TextStyle(fontSize: 12, color: Colors.white),
               )),
-          themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+          themeMode: PreferenceManager().isDarkThemeOn()
+              ? ThemeMode.dark
+              : ThemeMode.light,
           home: MyHomePage(),
         );
       },

@@ -1,3 +1,4 @@
+import 'package:cvflutter/managers/preferences_manager.dart';
 import 'package:flutter/material.dart';
 
 class AppStateNotifier extends ChangeNotifier {
@@ -5,6 +6,7 @@ class AppStateNotifier extends ChangeNotifier {
 
   void updateTheme(bool isDarkMode) {
     this.isDarkModeOn = isDarkMode;
+    PreferenceManager().setDarkTheme(isDarkMode);
     notifyListeners();
   }
 }

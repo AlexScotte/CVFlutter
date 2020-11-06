@@ -1,5 +1,6 @@
 import 'package:cvflutter/bloc/profile_bloc.dart';
 import 'package:cvflutter/helpers/widget_helper.dart';
+import 'package:cvflutter/managers/preferences_manager.dart';
 import 'package:cvflutter/model/profile.dart';
 import 'package:cvflutter/notifiers/AppStateNotifier.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Widget> _buildAppBarActions() {
     List<Widget> appBarActions = List<Widget>();
 
-    var isDarkModeOn = Provider.of<AppStateNotifier>(context).isDarkModeOn;
+    var isDarkModeOn = PreferenceManager().isDarkThemeOn();
 
     var moreButtons = PopupMenuButton(
       onSelected: (idx) {
