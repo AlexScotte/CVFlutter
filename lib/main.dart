@@ -1,3 +1,4 @@
+import 'package:cvflutter/managers/local_database_manager.dart';
 import 'package:cvflutter/managers/preferences_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'pages/homepage.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PreferenceManager().init();
+  await LocalDatabaseManager().init();
   runApp(
     ChangeNotifierProvider<AppStateNotifier>(
         create: (context) => AppStateNotifier(), child: MyApp()),
