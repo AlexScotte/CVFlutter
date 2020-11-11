@@ -56,16 +56,13 @@ class Profile {
     location = json[kLocation];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data[kAge] = this.age;
     data[kBackgroundImageUrl] = this.backgroundImageUrl;
     data[kBirthDate] = this.birthDate;
     data[kDescription] = this.description;
     data[kFirstName] = this.firstName;
-    // if (this.hobbies != null) {
-    //   data[kHobbies] = this.hobbies.map((v) => v.toJson()).toList();
-    // }
     data[kImageUrl] = this.imageUrl;
     data[kJob] = this.job;
     data[kLastName] = this.lastName;
@@ -74,6 +71,6 @@ class Profile {
   }
 
   static String prepareTable() {
-    return "profile(id INTEGER PRIMARY KEY, $kAge INTEGER, $kBackgroundImageUrl TEXT, $kBirthDate TEXT, $kDescription TEXT, $kFirstName TEXT, $kImageUrl TEXT, $kJob TEXT, $kLastName TEXT, $kLocation TEXT )";
+    return "id INTEGER PRIMARY KEY, $kAge INTEGER, $kBackgroundImageUrl TEXT, $kBirthDate TEXT, $kDescription TEXT, $kFirstName TEXT, $kImageUrl TEXT, $kJob TEXT, $kLastName TEXT, $kLocation TEXT";
   }
 }

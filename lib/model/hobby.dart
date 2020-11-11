@@ -12,7 +12,7 @@ class Hobby {
     name = json[kName];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data[kId] = this.id;
     data[kName] = this.name;
@@ -20,6 +20,6 @@ class Hobby {
   }
 
   static String prepareTable() {
-    return "hobbies($kId INTEGER, $kName TEXT)";
+    return "$kId INTEGER, $kName TEXT";
   }
 }

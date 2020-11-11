@@ -1,4 +1,12 @@
 class Formation {
+  static String kDate = 'date';
+  static String kDescription = 'description';
+  static String kEstablishment = 'establishment';
+  static String kId = 'id';
+  static String kName = 'name';
+  static String kTown = 'town';
+  static String kUrl = 'url';
+
   String date;
   String description;
   String establishment;
@@ -17,24 +25,28 @@ class Formation {
       this.url});
 
   Formation.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
-    description = json['description'];
-    establishment = json['establishment'];
-    id = json['id'];
-    name = json['name'];
-    town = json['town'];
-    url = json['url'];
+    date = json[kDate];
+    description = json[kDescription];
+    establishment = json[kEstablishment];
+    id = json[kId];
+    name = json[kName];
+    town = json[kTown];
+    url = json[kUrl];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date;
-    data['description'] = this.description;
-    data['establishment'] = this.establishment;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['town'] = this.town;
-    data['url'] = this.url;
+    data[kDate] = this.date;
+    data[kDescription] = this.description;
+    data[kEstablishment] = this.establishment;
+    data[kId] = this.id;
+    data[kName] = this.name;
+    data[kTown] = this.town;
+    data[kUrl] = this.url;
     return data;
+  }
+
+  static String prepareTable() {
+    return "id INTEGER PRIMARY KEY, $kDate TEXT, $kDescription TEXT, $kEstablishment TEXT, $kName TEXT, $kTown TEXT, $kUrl TEXT";
   }
 }

@@ -1,21 +1,26 @@
 class Skill {
-  int id;
+  static String kImportant = 'important';
+  static String kName = 'name';
+  static String fkSkillId = 'skill_id';
+
   int important;
   String name;
 
-  Skill({this.id, this.important, this.name});
+  Skill({this.important, this.name});
 
   Skill.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    important = json['important'];
-    name = json['name'];
+    important = json[kImportant];
+    name = json[kName];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['important'] = this.important;
-    data['name'] = this.name;
+    data[kImportant] = this.important;
+    data[kName] = this.name;
     return data;
+  }
+
+  static String prepareTable() {
+    return "id INTEGER PRIMARY KEY, $kName TEXT, $kImportant INTEGER";
   }
 }

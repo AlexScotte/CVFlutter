@@ -1,42 +1,44 @@
 import 'package:cvflutter/model/experience.dart';
 
 class Client {
+  static String kExperience = 'experience';
+  static String kImageUrl = 'imageUrl';
+  static String kLocation = 'location';
+  static String kName = 'name';
+  static String kSite = 'site';
+  static String fkCompanyId = 'company_id';
+
   Experience experience;
-  int id;
   String imageUrl;
   String location;
   String name;
   String site;
 
-  Client(
-      {this.experience,
-      this.id,
-      this.imageUrl,
-      this.location,
-      this.name,
-      this.site});
+  Client({this.experience, this.imageUrl, this.location, this.name, this.site});
 
   Client.fromJson(Map<String, dynamic> json) {
-    experience = json['experience'] != null
-        ? new Experience.fromJson(json['experience'])
+    experience = json[kExperience] != null
+        ? new Experience.fromJson(json[kExperience])
         : null;
-    id = json['id'];
-    imageUrl = json['imageUrl'];
-    location = json['location'];
-    name = json['name'];
-    site = json['site'];
+    imageUrl = json[kImageUrl];
+    location = json[kLocation];
+    name = json[kName];
+    site = json[kSite];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.experience != null) {
-      data['experience'] = this.experience.toJson();
-    }
-    data['id'] = this.id;
-    data['imageUrl'] = this.imageUrl;
-    data['location'] = this.location;
-    data['name'] = this.name;
-    data['site'] = this.site;
+    // if (this.experience != null) {
+    //   data['experience'] = this.experience.toMap();
+    // }
+    data[kImageUrl] = this.imageUrl;
+    data[kLocation] = this.location;
+    data[kName] = this.name;
+    data[kSite] = this.site;
     return data;
+  }
+
+  static String prepareTable() {
+    return "id INTEGER PRIMARY KEY, $kImageUrl TEXT, $kLocation TEXT, $kName TEXT, $kSite TEXT";
   }
 }

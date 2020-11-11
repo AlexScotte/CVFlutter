@@ -1,6 +1,11 @@
 import 'package:cvflutter/model/external_link.dart';
 
 class Contact {
+  static String kCvUrl = 'cvUrl';
+  static String kEmail = 'email';
+  static String kExternalLinks = 'externalLinks';
+  static String kPhone = 'phone';
+
   String cvUrl;
   String email;
   List<ExternalLink> externalLinks;
@@ -9,26 +14,29 @@ class Contact {
   Contact({this.cvUrl, this.email, this.externalLinks, this.phone});
 
   Contact.fromJson(Map<String, dynamic> json) {
-    cvUrl = json['cvUrl'];
-    email = json['email'];
-    if (json['externalLinks'] != null) {
+    cvUrl = json[kCvUrl];
+    email = json[kEmail];
+    if (json[kExternalLinks] != null) {
       externalLinks = new List<ExternalLink>();
-      json['externalLinks'].forEach((v) {
+      json[kExternalLinks].forEach((v) {
         externalLinks.add(new ExternalLink.fromJson(v));
       });
     }
-    phone = json['phone'];
+    phone = json[kPhone];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cvUrl'] = this.cvUrl;
-    data['email'] = this.email;
-    if (this.externalLinks != null) {
-      data['externalLinks'] =
-          this.externalLinks.map((v) => v.toJson()).toList();
-    }
-    data['phone'] = this.phone;
+    data[kCvUrl] = this.cvUrl;
+    data[kEmail] = this.email;
+    // if (this.externalLinks != null) {
+    //   data[kExternalLinks] = this.externalLinks.map((v) => v.toJson()).toList();
+    // }
+    data[kPhone] = this.phone;
     return data;
+  }
+
+  static String prepareTable() {
+    return "id INTEGER PRIMARY KEY $kCvUrl TEXT,$kEmail TEXT,$kPhone TEXT";
   }
 }
