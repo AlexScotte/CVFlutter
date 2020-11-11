@@ -37,6 +37,6 @@ class Contact {
   }
 
   static String prepareTable() {
-    return "id INTEGER PRIMARY KEY $kCvUrl TEXT,$kEmail TEXT,$kPhone TEXT";
+    return "id INTEGER PRIMARY KEY, $kCvUrl TEXT,$kEmail TEXT,$kPhone TEXT";
   }
 }

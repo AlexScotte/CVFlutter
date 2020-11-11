@@ -1,6 +1,7 @@
 import 'package:cvflutter/model/experience.dart';
 
 class Client {
+  static String kId = 'id';
   static String kExperience = 'experience';
   static String kImageUrl = 'imageUrl';
   static String kLocation = 'location';
@@ -8,6 +9,7 @@ class Client {
   static String kSite = 'site';
   static String fkCompanyId = 'company_id';
 
+  int id;
   Experience experience;
   String imageUrl;
   String location;
@@ -20,6 +22,7 @@ class Client {
     experience = json[kExperience] != null
         ? new Experience.fromJson(json[kExperience])
         : null;
+    id = json[kId];
     imageUrl = json[kImageUrl];
     location = json[kLocation];
     name = json[kName];

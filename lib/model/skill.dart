@@ -1,14 +1,17 @@
 class Skill {
+  static String kId = 'id';
   static String kImportant = 'important';
   static String kName = 'name';
   static String fkSkillId = 'skill_id';
 
+  int id;
   int important;
   String name;
 
   Skill({this.important, this.name});
 
   Skill.fromJson(Map<String, dynamic> json) {
+    id = json[kId];
     important = json[kImportant];
     name = json[kName];
   }

@@ -1,14 +1,16 @@
 import 'package:cvflutter/model/client.dart';
 
-final String kClients = 'clients';
-final String kDateEnd = 'dateEnd';
-final String kDateStart = 'dateStart';
-final String kDepartment = 'department';
-final String kJob = 'job';
-final String kName = 'name';
-final String kTown = 'town';
-
 class Company {
+  static String kId = 'id';
+  static String kClients = 'clients';
+  static String kDateEnd = 'dateEnd';
+  static String kDateStart = 'dateStart';
+  static String kDepartment = 'department';
+  static String kJob = 'job';
+  static String kName = 'name';
+  static String kTown = 'town';
+
+  int id;
   List<Client> clients;
   String dateEnd;
   String dateStart;
@@ -34,6 +36,7 @@ class Company {
         clients.add(new Client.fromJson(v));
       });
     }
+    id = json[kId];
     dateEnd = json[kDateEnd];
     dateStart = json[kDateStart];
     department = json[kDepartment];

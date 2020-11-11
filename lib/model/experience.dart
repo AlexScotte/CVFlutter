@@ -2,6 +2,7 @@ import 'package:cvflutter/model/experience_details.dart';
 import 'package:cvflutter/model/skill.dart';
 
 class Experience {
+  static String kId = 'id';
   static String kDetails = 'details';
   static String kDuration = 'duration';
   static String kDateStart = 'dateStart';
@@ -11,6 +12,7 @@ class Experience {
   static String fkExperienceId = 'experience_id';
   static String fkClientId = 'client_id';
 
+  int id;
   ExperienceDetails details;
   String duration;
   String job;
@@ -22,6 +24,7 @@ class Experience {
     details = json[kDetails] != null
         ? new ExperienceDetails.fromJson(json[kDetails])
         : null;
+    id = json[kId];
     duration = json[kDuration];
     job = json[kJob];
     if (json[kSkills] != null) {

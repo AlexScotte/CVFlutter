@@ -1,14 +1,16 @@
 class ExperienceDetails {
+  static String kId = 'id';
   static String kContext = 'context';
   static String kMissions = 'missions';
   static String fkEperienceId = 'experience_id';
-
+  int id;
   String context;
   String missions;
 
   ExperienceDetails({this.context, this.missions});
 
   ExperienceDetails.fromJson(Map<String, dynamic> json) {
+    id = json[kId];
     context = json[kContext];
     missions = json[kMissions];
   }
