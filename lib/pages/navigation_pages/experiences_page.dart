@@ -104,7 +104,6 @@ class _ExperiencePageState extends State<ExperiencePage> {
             dateEnd: originCompany.dateEnd,
             dateStart: originCompany.dateStart,
             department: originCompany.department,
-            id: originCompany.id,
             job: originCompany.job,
             name: originCompany.name,
             town: originCompany.town);
