@@ -88,7 +88,7 @@ class LocalDatabaseManager {
     await _database.execute(
         "CREATE TABLE IF NOT EXISTS $kFormations(${Formation.prepareTable()})");
     await _database.execute(
-        "CREATE TABLE IF NOT EXISTS $kContact(${Contact.prepareTable()})");
+        "CREATE TABLE IF NOT EXISTS $kContact (${Contact.prepareTable()})");
     await _database.execute(
         "CREATE TABLE IF NOT EXISTS $kExternalLinks(${ExternalLink.prepareTable()})");
   }
@@ -151,7 +151,7 @@ class LocalDatabaseManager {
     for (var skill in skills) {
       // Get id skill if it exists
       List<Map<String, dynamic>> maps = await _database.rawQuery(
-          "SELECT id FROM ${LocalDatabaseManager().kSkills} WHERE ${Skill.kName} = '${skill.name}'");
+          "SELECT id FROM $kSkills WHERE ${Skill.kName} = '${skill.name}'");
       int idSkill = 0;
       if (maps.isNotEmpty) {
         idSkill = maps.first["id"];
@@ -206,6 +206,39 @@ class LocalDatabaseManager {
     var maps = await _database.query(kCompanies);
     return List.generate(maps.length, (i) {
       return Company.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Client>> getClientsByCompanyId(int companyId) async {
+    List<Map<String, dynamic>> maps = await _database.rawQuery(
+        "SELECT * FROM $kClients WHERE ${Client.fkCompanyId} = '$companyId'");
+    return List.generate(maps.length, (i) {
+      return Client.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Experience>> getExperienceByClientId(int clientId) async {
+    List<Map<String, dynamic>> maps = await _database.rawQuery(
+        "SELECT * FROM $kExperience WHERE ${Experience.fkClientId} = '$clientId'");
+    return List.generate(maps.length, (i) {
+      return Experience.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<ExperienceDetails>> getExperienceDetailsByExperienceId(
+      int experienceId) async {
+    List<Map<String, dynamic>> maps = await _database.rawQuery(
+        "SELECT * FROM $kExperienceDetails WHERE ${ExperienceDetails.fkEperienceId} = '$experienceId'");
+    return List.generate(maps.length, (i) {
+      return ExperienceDetails.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Skill>> getSkillByExperienceId(int experienceId) async {
+    List<Map<String, dynamic>> maps = await _database.rawQuery(
+        "SELECT * FROM $kSkills LEFT JOIN $kLinkSkillExperience ON $kSkills.id = $kLinkSkillExperience.${Skill.fkSkillId} WHERE $kLinkSkillExperience.${Experience.fkExperienceId} = '$experienceId'");
+    return List.generate(maps.length, (i) {
+      return Skill.fromJson(maps[i]);
     });
   }
 
