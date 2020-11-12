@@ -1,7 +1,7 @@
 class Informations {
   static String kVersion = 'version';
 
-  String version;
+  double version;
 
   Informations({this.version});
 
