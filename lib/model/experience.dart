@@ -37,14 +37,8 @@ class Experience {
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    // if (this.details != null) {
-    //   data[kDetails] = this.details.toMap();
-    // }
     data[kDuration] = this.duration;
     data[kJob] = this.job;
-    // if (this.skills != null) {
-    //   data[kSkills] = this.skills.map((v) => v.toJson()).toList();
-    // }
     return data;
   }
 

@@ -29,9 +29,6 @@ class Contact {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data[kCvUrl] = this.cvUrl;
     data[kEmail] = this.email;
-    // if (this.externalLinks != null) {
-    //   data[kExternalLinks] = this.externalLinks.map((v) => v.toJson()).toList();
-    // }
     data[kPhone] = this.phone;
     return data;
   }

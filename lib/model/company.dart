@@ -47,9 +47,6 @@ class Company {
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    // if (this.clients != null) {
-    //   data[kClients] = this.clients.map((v) => v.toMap()).toList();
-    // }
     data[kDateEnd] = this.dateEnd;
     data[kDateStart] = this.dateStart;
     data[kDepartment] = this.department;

@@ -248,5 +248,26 @@ class LocalDatabaseManager {
       return Hobby.fromJson(maps[i]);
     });
   }
+
+  Future<List<Formation>> getFormations() async {
+    var maps = await _database.query(kFormations);
+    return List.generate(maps.length, (i) {
+      return Formation.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Contact>> getContact() async {
+    var maps = await _database.query(kContact);
+    return List.generate(maps.length, (i) {
+      return Contact.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<ExternalLink>> getExternalLinks() async {
+    var maps = await _database.query(kExternalLinks);
+    return List.generate(maps.length, (i) {
+      return ExternalLink.fromJson(maps[i]);
+    });
+  }
   /* #endregion */
 }

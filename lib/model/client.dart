@@ -31,9 +31,6 @@ class Client {
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    // if (this.experience != null) {
-    //   data['experience'] = this.experience.toMap();
-    // }
     data[kImageUrl] = this.imageUrl;
     data[kLocation] = this.location;
     data[kName] = this.name;
