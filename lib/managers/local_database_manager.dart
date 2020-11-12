@@ -46,14 +46,14 @@ class LocalDatabaseManager {
         // path to perform database upgrades and downgrades.
         version: 1, onConfigure: (Database db) async {
       await db.execute('PRAGMA foreign_keys = ON');
+    }, onCreate: (Database db, int version) async {
+      await _createTables(db);
     });
-
-    await _prepareTables();
   }
 
-  Future<void> _prepareTables() async {
+  Future<void> initLocalDatabase() async {
     await _dropTables();
-    await _createTables();
+    await _createTables(_database);
   }
 
   Future<void> _dropTables() async {
@@ -71,30 +71,30 @@ class LocalDatabaseManager {
     await _database.execute("DROP TABLE IF EXISTS $kInformations");
   }
 
-  Future<void> _createTables() async {
-    await _database.execute(
+  Future<void> _createTables(Database db) async {
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kInformations (${Informations.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kProfile (${Profile.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kHobbies(${Hobby.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kCompanies (${Company.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kClients (${Client.prepareTable()}, ${Client.fkCompanyId} INTEGER, FOREIGN KEY(${Client.fkCompanyId}) REFERENCES $kCompanies(id))");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kExperience (${Experience.prepareTable()}, ${Experience.fkClientId} INTEGER, FOREIGN KEY(${Experience.fkClientId}) REFERENCES $kClients(id))");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kExperienceDetails (${ExperienceDetails.prepareTable()}, ${ExperienceDetails.fkEperienceId} INTEGER, FOREIGN KEY(${ExperienceDetails.fkEperienceId}) REFERENCES $Experience(id))");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kSkills(${Skill.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kLinkSkillExperience (${Experience.fkExperienceId} INTEGER, ${Skill.fkSkillId} INTEGER,FOREIGN KEY(${Experience.fkExperienceId}) REFERENCES $kExperience(id),FOREIGN KEY(${Skill.fkSkillId}) REFERENCES $kSkills(id))");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kFormations(${Formation.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kContact (${Contact.prepareTable()})");
-    await _database.execute(
+    await db.execute(
         "CREATE TABLE IF NOT EXISTS $kExternalLinks(${ExternalLink.prepareTable()})");
   }
 
@@ -152,7 +152,8 @@ class LocalDatabaseManager {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<void> createSkills(int idExp, List<Skill> skills) async {
+  Future<void> createSkills(int idExp, List<Skill> skills,
+      [bool createLink = true]) async {
     for (var skill in skills) {
       // Get id skill if it exists
       List<Map<String, dynamic>> maps = await _database.rawQuery(
@@ -166,7 +167,9 @@ class LocalDatabaseManager {
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
 
-      await createLinkSkillExperience(idExp, idSkill);
+      if (createLink) {
+        await createLinkSkillExperience(idExp, idSkill);
+      }
     }
   }
 
@@ -247,6 +250,20 @@ class LocalDatabaseManager {
   Future<List<Skill>> getSkillByExperienceId(int experienceId) async {
     List<Map<String, dynamic>> maps = await _database.rawQuery(
         "SELECT * FROM $kSkills LEFT JOIN $kLinkSkillExperience ON $kSkills.id = $kLinkSkillExperience.${Skill.fkSkillId} WHERE $kLinkSkillExperience.${Experience.fkExperienceId} = '$experienceId'");
+    return List.generate(maps.length, (i) {
+      return Skill.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Skill>> getDistinctSkills([bool isImportant = true]) async {
+    String query = "";
+    if (isImportant) {
+      query = "SELECT DISTINCT * FROM $kSkills WHERE ${Skill.kImportant} == 1";
+    } else {
+      query = "SELECT DISTINCT * FROM $kSkills";
+    }
+
+    List<Map<String, dynamic>> maps = await _database.rawQuery(query);
     return List.generate(maps.length, (i) {
       return Skill.fromJson(maps[i]);
     });

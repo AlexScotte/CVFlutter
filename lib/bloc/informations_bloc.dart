@@ -11,9 +11,8 @@ class InformationsBloc {
 
   Observable<Informations> get informations => _fetcher.stream;
 
-  fetchContact() async {
+  fetchInformations() async {
     Informations response = await _repository.getInformations();
-
     _fetcher.sink.add(response);
   }
 
