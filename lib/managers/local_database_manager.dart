@@ -6,6 +6,7 @@ import 'package:cvflutter/model/experience_details.dart';
 import 'package:cvflutter/model/external_link.dart';
 import 'package:cvflutter/model/formation.dart';
 import 'package:cvflutter/model/hobby.dart';
+import 'package:cvflutter/model/informations.dart';
 import 'package:cvflutter/model/profile.dart';
 import 'package:cvflutter/model/skill.dart';
 import 'package:sqflite/sqflite.dart';
@@ -32,6 +33,7 @@ class LocalDatabaseManager {
   final String kFormations = "formations";
   final String kContact = "contact";
   final String kExternalLinks = "externalLinks";
+  final String kInformations = "informations";
 
   init() async {
     // Open the database and store the reference.
@@ -66,9 +68,12 @@ class LocalDatabaseManager {
     await _database.execute("DROP TABLE IF EXISTS $kFormations");
     await _database.execute("DROP TABLE IF EXISTS $kContact");
     await _database.execute("DROP TABLE IF EXISTS $kExternalLinks");
+    await _database.execute("DROP TABLE IF EXISTS $kInformations");
   }
 
   Future<void> _createTables() async {
+    await _database.execute(
+        "CREATE TABLE IF NOT EXISTS $kInformations (${Informations.prepareTable()})");
     await _database.execute(
         "CREATE TABLE IF NOT EXISTS $kProfile (${Profile.prepareTable()})");
     await _database.execute(
@@ -192,6 +197,11 @@ class LocalDatabaseManager {
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
   }
+
+  Future<void> createInformations(Informations informations) async {
+    await _database.insert(kInformations, informations.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
 /* #endregion */
 
 /* #region Get */
@@ -267,6 +277,13 @@ class LocalDatabaseManager {
     var maps = await _database.query(kExternalLinks);
     return List.generate(maps.length, (i) {
       return ExternalLink.fromJson(maps[i]);
+    });
+  }
+
+  Future<List<Informations>> getInformations() async {
+    var maps = await _database.query(kInformations);
+    return List.generate(maps.length, (i) {
+      return Informations.fromJson(maps[i]);
     });
   }
   /* #endregion */
