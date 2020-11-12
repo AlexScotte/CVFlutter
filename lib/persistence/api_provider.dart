@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cvflutter/model/company.dart';
 import 'package:cvflutter/model/contact.dart';
 import 'package:cvflutter/model/formation.dart';
+import 'package:cvflutter/model/informations.dart';
 import 'package:cvflutter/model/skill.dart';
 import 'package:http/http.dart' show Client;
 import 'package:cvflutter/model/profile.dart';
@@ -64,6 +65,16 @@ class ApiProvider {
     try {
       final response = await client.get("$_baseUrl" + "/contact");
       return Contact.fromJson(json.decode(response.body));
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Failed to load profile ($error stackTrace: $stacktrace")');
+    }
+  }
+
+  Future<Informations> fetchInformations() async {
+    try {
+      final response = await client.get("$_baseUrl" + "/informations");
+      return Informations.fromJson(json.decode(response.body));
     } catch (error, stacktrace) {
       throw Exception(
           'Failed to load profile ($error stackTrace: $stacktrace")');
