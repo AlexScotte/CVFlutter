@@ -22,6 +22,11 @@ class FormationBloc {
 
     var isNetworkConnected = await DataManager().checkConnection();
     if (isNetworkConnected) {
+      if (DataManager().isLatestLocalDataVersion == null) {
+        // Init and check version when  user opens the app the first time without connection
+        //and enables it after
+        await DataManager().init();
+      }
       if (DataManager().isLatestLocalDataVersion) {
         formations = await LocalDatabaseManager().getFormations();
         if (formations == null || formations.isEmpty) {

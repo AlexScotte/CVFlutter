@@ -22,6 +22,11 @@ class ContactBloc {
 
     var isNetworkConnected = await DataManager().checkConnection();
     if (isNetworkConnected) {
+      if (DataManager().isLatestLocalDataVersion == null) {
+        // Init and check version when  user opens the app the first time without connection
+        //and enables it after
+        await DataManager().init();
+      }
       if (DataManager().isLatestLocalDataVersion) {
         contact = await this._getLocalDataContact();
         if (contact == null) {
