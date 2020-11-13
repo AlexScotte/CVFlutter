@@ -75,7 +75,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
         child: StreamBuilder(
             stream: _xpBloc.companies,
             builder: (context, AsyncSnapshot<List<Company>> snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && snapshot.data.isNotEmpty) {
                 _companies = snapshot.data.reversed.toList();
                 return _buildListPanel(
                     _isSearching ? _buildSearchList() : _companies);

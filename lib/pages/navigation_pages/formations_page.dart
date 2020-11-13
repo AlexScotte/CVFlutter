@@ -30,15 +30,12 @@ class _FormationsPageState extends State<FormationsPage> {
       body: StreamBuilder(
           stream: _formationBloc.formations,
           builder: (context, AsyncSnapshot<List<Formation>> snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data.isNotEmpty) {
               return _buildFormationListUI(snapshot.data.reversed.toList());
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
-            return Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2,
-                child: Center(child: CircularProgressIndicator()));
+            return Center(child: CircularProgressIndicator());
           }),
     );
   }

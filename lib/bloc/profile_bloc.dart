@@ -29,33 +29,39 @@ class ProfileBloc {
       }
 
       if (DataManager().isLatestLocalDataVersion) {
-        var profiles = await LocalDatabaseManager().getProfile();
-        if (profiles != null && profiles.isNotEmpty) {
-          profile = profiles.first;
-          profile.hobbies = await LocalDatabaseManager().getHobbies();
-          profile.distinctSkills =
-              await LocalDatabaseManager().getDistinctSkills(true);
-        } else {
+        profile = await this._getLocalDataProfile();
+        if (profile == null) {
           profile = await _repository.getProfile();
           profile.distinctSkills = await _repository.getDistinctSkills();
-          await LocalDatabaseManager().createProfile(profile);
-          await LocalDatabaseManager().createHobbies(profile.hobbies);
-          await LocalDatabaseManager()
-              .createSkills(-1, profile.distinctSkills, false);
+          this._saveLocalDataProfile(profile);
         }
       }
     } else {
-      var profiles = await LocalDatabaseManager().getProfile();
-      if (profiles != null && profiles.isNotEmpty) {
-        profile = profiles.first;
-        profile.hobbies = await LocalDatabaseManager().getHobbies();
-        profile.distinctSkills =
-            await LocalDatabaseManager().getDistinctSkills(true);
-      }
+      profile = await this._getLocalDataProfile();
     }
 
     isFetching = false;
     _fetcher.sink.add(profile);
+  }
+
+  Future<void> _saveLocalDataProfile(Profile profile) async {
+    await LocalDatabaseManager().createProfile(profile);
+    await LocalDatabaseManager().createHobbies(profile.hobbies);
+    await LocalDatabaseManager()
+        .createSkills(-1, profile.distinctSkills, false);
+  }
+
+  Future<Profile> _getLocalDataProfile() async {
+    Profile profile;
+    var profiles = await LocalDatabaseManager().getProfile();
+    if (profiles != null && profiles.isNotEmpty) {
+      profile = profiles.first;
+      profile.hobbies = await LocalDatabaseManager().getHobbies();
+      profile.distinctSkills =
+          await LocalDatabaseManager().getDistinctSkills(true);
+    }
+
+    return profile;
   }
 
   dispose() {
