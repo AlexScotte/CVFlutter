@@ -1,16 +1,6 @@
-# cvflutter
+# Digital resume in FLUTTER
 
-A new Flutter project.
+Digital resume to practice Flutter and show my skills.
+https://github.com/AlexScotte/CVFlutter/wiki
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://user-images.githubusercontent.com/53000621/99261145-9a6d9400-281c-11eb-8ecc-881a94a61d57.jpg" width="18%"> <img src="https://user-images.githubusercontent.com/53000621/99261152-9d688480-281c-11eb-9976-ce662a79d8fc.jpg" width="18%"> <img src="https://user-images.githubusercontent.com/53000621/99261161-a0fc0b80-281c-11eb-9436-863a9eac2cbf.jpg" width="18%"> <img src="https://user-images.githubusercontent.com/53000621/99261183-a5c0bf80-281c-11eb-9aec-b74155330263.jpg" width="18%"> <img src="https://user-images.githubusercontent.com/53000621/99261191-a8bbb000-281c-11eb-86b8-58a38788ecea.jpg" width="18%">
