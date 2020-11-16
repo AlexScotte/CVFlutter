@@ -44,32 +44,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: _selectedIndex == 0
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title:
-                Text(AppLocalizations.of(context).translate('title_profile')),
+            label: AppLocalizations.of(context).translate('title_profile'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work,
                 color: _selectedIndex == 1
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title: Text(
-                AppLocalizations.of(context).translate('title_experiences')),
+            label: AppLocalizations.of(context).translate('title_experiences'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school,
                 color: _selectedIndex == 2
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title:
-                Text(AppLocalizations.of(context).translate('title_formation')),
+            label: AppLocalizations.of(context).translate('title_formation'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.alternate_email,
                 color: _selectedIndex == 3
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color),
-            title:
-                Text(AppLocalizations.of(context).translate('title_contact')),
+            label: AppLocalizations.of(context).translate('title_contact'),
           ),
         ],
       ),

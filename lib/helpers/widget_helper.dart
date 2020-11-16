@@ -8,7 +8,7 @@ class WidgetHelper {
       var item = items[i];
       ChoiceChip choiceChip = ChoiceChip(
         selected: false,
-        label: Text(item, style: Theme.of(context).textTheme.body2),
+        label: Text(item, style: Theme.of(context).textTheme.bodyText2),
         shadowColor: Colors.transparent,
       );
 

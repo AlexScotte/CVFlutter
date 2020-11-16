@@ -50,27 +50,30 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.blue[900],
               iconTheme: IconThemeData(color: Colors.black),
               textTheme: TextTheme(
-                title: TextStyle(fontSize: 18, color: Colors.blue[900]),
-                subtitle: TextStyle(
+                headline1: TextStyle(fontSize: 18, color: Colors.blue[900]),
+                subtitle1: TextStyle(
                     fontSize: 12,
                     color: Colors.black,
                     fontStyle: FontStyle.italic),
-                headline: TextStyle(fontSize: 18, color: Colors.black),
-                body1: TextStyle(fontSize: 14, color: Colors.black),
-                body2: TextStyle(fontSize: 12, color: Colors.black),
+                headline2: TextStyle(fontSize: 18, color: Colors.black),
+                bodyText1: TextStyle(fontSize: 14, color: Colors.black),
+                bodyText2: TextStyle(fontSize: 12, color: Colors.black),
               )),
           darkTheme: ThemeData.dark().copyWith(
               accentColor: Colors.cyanAccent[400],
               iconTheme: IconThemeData(color: Colors.white),
               textTheme: TextTheme(
-                title: TextStyle(fontSize: 18, color: Colors.cyanAccent[400]),
-                subtitle: TextStyle(
+                headline1: TextStyle(
+                    fontSize: 18,
+                    color: Colors.cyanAccent[400],
+                    fontWeight: FontWeight.bold),
+                subtitle1: TextStyle(
                     fontSize: 12,
                     color: Colors.white,
                     fontStyle: FontStyle.italic),
-                headline: TextStyle(fontSize: 18, color: Colors.white),
-                body1: TextStyle(fontSize: 14, color: Colors.white),
-                body2: TextStyle(fontSize: 12, color: Colors.white),
+                headline2: TextStyle(fontSize: 18, color: Colors.white),
+                bodyText1: TextStyle(fontSize: 14, color: Colors.white),
+                bodyText2: TextStyle(fontSize: 12, color: Colors.white),
               )),
           themeMode: PreferenceManager().isDarkThemeOn()
               ? ThemeMode.dark

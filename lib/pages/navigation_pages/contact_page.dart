@@ -24,7 +24,7 @@ class _ContactPageState extends State<ContactPage> {
       appBar: AppBar(
         title: Text(
             AppLocalizations.of(context).translate('title_view_contact'),
-            style: Theme.of(context).textTheme.headline),
+            style: Theme.of(context).textTheme.headline2),
       ),
       body: StreamBuilder(
           stream: _contactBloc.contact,
@@ -85,7 +85,7 @@ class _ContactPageState extends State<ContactPage> {
                 ),
                 Padding(padding: EdgeInsets.only(left: 10.0)),
                 Text(contact.phone,
-                    style: Theme.of(context).textTheme.headline),
+                    style: Theme.of(context).textTheme.headline2),
               ],
             )),
       );
@@ -107,7 +107,7 @@ class _ContactPageState extends State<ContactPage> {
                 size: 30,
               ),
               Padding(padding: EdgeInsets.only(left: 10.0)),
-              Text(contact.email, style: Theme.of(context).textTheme.headline),
+              Text(contact.email, style: Theme.of(context).textTheme.headline2),
             ],
           )));
       items.add(Padding(padding: EdgeInsets.only(top: 20.0)));
@@ -145,7 +145,7 @@ class _ContactPageState extends State<ContactPage> {
             onTap: () async {
               if (await canLaunch(extLink.url)) await launch(extLink.url);
             },
-            child: Text(linkName, style: Theme.of(context).textTheme.headline),
+            child: Text(linkName, style: Theme.of(context).textTheme.headline2),
           ),
         )
       ],

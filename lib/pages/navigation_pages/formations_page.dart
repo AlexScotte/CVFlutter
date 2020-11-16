@@ -25,7 +25,7 @@ class _FormationsPageState extends State<FormationsPage> {
       appBar: AppBar(
         title: Text(
             AppLocalizations.of(context).translate('title_view_formation'),
-            style: Theme.of(context).textTheme.headline),
+            style: Theme.of(context).textTheme.headline2),
       ),
       body: StreamBuilder(
           stream: _formationBloc.formations,
@@ -53,7 +53,7 @@ class _FormationsPageState extends State<FormationsPage> {
 
         return Row(
           children: <Widget>[
-            Text(formation.date, style: Theme.of(context).textTheme.title),
+            Text(formation.date, style: Theme.of(context).textTheme.headline1),
             Center(
               child: CustomPaint(
                   size: Size(30, 135),
@@ -74,15 +74,15 @@ class _FormationsPageState extends State<FormationsPage> {
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 30.0)),
                   Text(formation.name,
-                      style: Theme.of(context).textTheme.title),
+                      style: Theme.of(context).textTheme.headline1),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
                   Text(itemSubtitle,
-                      style: Theme.of(context).textTheme.subtitle),
+                      style: Theme.of(context).textTheme.subtitle1),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
                   if (formation.description != null &&
                       formation.description.isNotEmpty)
                     Text(formation.description,
-                        style: Theme.of(context).textTheme.body1),
+                        style: Theme.of(context).textTheme.bodyText1),
                 ],
               ),
             ))

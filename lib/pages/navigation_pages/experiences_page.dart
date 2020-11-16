@@ -48,7 +48,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     if (!_isSearching) {
       _appBarTitle = Text(
           AppLocalizations.of(context).translate('title_view_experiences'),
-          style: Theme.of(context).textTheme.headline);
+          style: Theme.of(context).textTheme.headline1);
       _actionSearchIcon =
           Icon(Icons.search, color: Theme.of(context).iconTheme.color);
       _actionIcon = _actionSearchIcon;
@@ -153,14 +153,14 @@ class _ExperiencePageState extends State<ExperiencePage> {
         Expanded(
             child: TextField(
           controller: _searchQuery,
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context).textTheme.headline2,
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
               hintText:
                   AppLocalizations.of(context).translate('toolbar_search'),
               hintStyle: Theme.of(context)
                   .textTheme
-                  .headline
+                  .headline2
                   .copyWith(fontSize: 14, color: Colors.grey[400])),
         ))
       ],
@@ -200,10 +200,10 @@ class _ExperiencePageState extends State<ExperiencePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("${company.job} @ ${company.name}",
-                    style: Theme.of(context).textTheme.title),
+                    style: Theme.of(context).textTheme.headline1),
                 Padding(padding: EdgeInsets.only(top: 5.0)),
                 Text("(${company.dateStart} - ${company.dateEnd})",
-                    style: Theme.of(context).textTheme.subtitle),
+                    style: Theme.of(context).textTheme.subtitle1),
               ],
             ),
           );
@@ -228,12 +228,12 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(client.name,
-                      style: Theme.of(context).textTheme.headline),
+                      style: Theme.of(context).textTheme.headline2),
                   Padding(padding: EdgeInsets.only(top: 5.0)),
                   if (client.experience.duration != null &&
                       client.experience.duration.isNotEmpty)
                     Text("(${client.experience.duration})",
-                        style: Theme.of(context).textTheme.subtitle),
+                        style: Theme.of(context).textTheme.subtitle1),
                   WidgetHelper.buildChips(
                       context,
                       client.experience.skills

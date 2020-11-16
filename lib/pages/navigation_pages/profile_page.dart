@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   } else {
                     return Text(
                         "${snapshot.data.firstName} ${snapshot.data.lastName}",
-                        style: Theme.of(context).textTheme.headline);
+                        style: Theme.of(context).textTheme.headline2);
                   }
                 }),
             actions: _buildAppBarActions()),
@@ -68,23 +68,23 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(data.job.toUpperCase(),
-                              style: Theme.of(context).textTheme.title)
+                              style: Theme.of(context).textTheme.headline1)
                         ]),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildLocationRow(data),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
                     Text(AppLocalizations.of(context).translate('me_profile'),
-                        style: Theme.of(context).textTheme.title),
+                        style: Theme.of(context).textTheme.headline1),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     Text(data.description),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
                     Text(AppLocalizations.of(context).translate('me_skills'),
-                        style: Theme.of(context).textTheme.title),
+                        style: Theme.of(context).textTheme.headline1),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildSkillsChips(data),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     Text(AppLocalizations.of(context).translate('me_hobbies'),
-                        style: Theme.of(context).textTheme.title),
+                        style: Theme.of(context).textTheme.headline1),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     _buildHobbiesChips(data),
                   ]),
@@ -161,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Text(
                 AppLocalizations.of(context)
                     .translate('app_settings_mode_dark'),
-                style: Theme.of(context).textTheme.body1),
+                style: Theme.of(context).textTheme.bodyText1),
             value: 2,
             checked: isDarkModeOn,
           ),
