@@ -48,7 +48,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
     if (!_isSearching) {
       _appBarTitle = Text(
           AppLocalizations.of(context).translate('title_view_experiences'),
-          style: Theme.of(context).textTheme.headline1);
+          style: Theme.of(context).textTheme.caption);
       _actionSearchIcon =
           Icon(Icons.search, color: Theme.of(context).iconTheme.color);
       _actionIcon = _actionSearchIcon;
@@ -200,7 +200,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("${company.job} @ ${company.name}",
-                    style: Theme.of(context).textTheme.headline1),
+                    style: Theme.of(context).textTheme.caption),
                 Padding(padding: EdgeInsets.only(top: 5.0)),
                 Text("(${company.dateStart} - ${company.dateEnd})",
                     style: Theme.of(context).textTheme.subtitle1),

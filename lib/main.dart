@@ -50,7 +50,10 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.blue[900],
               iconTheme: IconThemeData(color: Colors.black),
               textTheme: TextTheme(
-                headline1: TextStyle(fontSize: 18, color: Colors.blue[900]),
+                caption: TextStyle(
+                  fontSize: 18,
+                  color: Colors.blue[900],
+                ),
                 subtitle1: TextStyle(
                     fontSize: 12,
                     color: Colors.black,
@@ -63,10 +66,7 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.cyanAccent[400],
               iconTheme: IconThemeData(color: Colors.white),
               textTheme: TextTheme(
-                headline1: TextStyle(
-                    fontSize: 18,
-                    color: Colors.cyanAccent[400],
-                    fontWeight: FontWeight.bold),
+                caption: TextStyle(fontSize: 18, color: Colors.cyanAccent[400]),
                 subtitle1: TextStyle(
                     fontSize: 12,
                     color: Colors.white,

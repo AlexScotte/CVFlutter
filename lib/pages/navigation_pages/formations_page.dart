@@ -53,7 +53,7 @@ class _FormationsPageState extends State<FormationsPage> {
 
         return Row(
           children: <Widget>[
-            Text(formation.date, style: Theme.of(context).textTheme.headline1),
+            Text(formation.date, style: Theme.of(context).textTheme.caption),
             Center(
               child: CustomPaint(
                   size: Size(30, 135),
@@ -74,7 +74,7 @@ class _FormationsPageState extends State<FormationsPage> {
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 30.0)),
                   Text(formation.name,
-                      style: Theme.of(context).textTheme.headline1),
+                      style: Theme.of(context).textTheme.caption),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
                   Text(itemSubtitle,
                       style: Theme.of(context).textTheme.subtitle1),

@@ -65,8 +65,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(client.experience.job.toUpperCase(),
-                                    style:
-                                        Theme.of(context).textTheme.headline1),
+                                    style: Theme.of(context).textTheme.caption),
                                 Padding(padding: EdgeInsets.only(top: 10.0)),
                                 if (client.experience.duration != null &&
                                     client.experience.duration.isNotEmpty)
@@ -81,7 +80,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
                     Text(
                         AppLocalizations.of(context)
                             .translate('xp_details_skills'),
-                        style: Theme.of(context).textTheme.headline1),
+                        style: Theme.of(context).textTheme.caption),
                     Padding(padding: EdgeInsets.only(top: 10.0)),
                     WidgetHelper.buildChips(
                         context,
@@ -100,7 +99,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
         client.experience.details.context.isNotEmpty) {
       children.add(Text(
           AppLocalizations.of(context).translate('xp_details_context'),
-          style: Theme.of(context).textTheme.headline1));
+          style: Theme.of(context).textTheme.caption));
       children.add(Padding(padding: EdgeInsets.only(top: 20.0)));
       children
           .add(Text(client.experience.details.context.replaceAll("\\n", "\n")));
@@ -117,7 +116,7 @@ class _ExperienceDetailsPageState extends State<ExperienceDetailsPage> {
         client.experience.details.missions.isNotEmpty) {
       children.add(Text(
           AppLocalizations.of(context).translate('xp_details_mission'),
-          style: Theme.of(context).textTheme.headline1));
+          style: Theme.of(context).textTheme.caption));
       children.add(Padding(padding: EdgeInsets.only(top: 20.0)));
       children.add(
           Text(client.experience.details.missions.replaceAll("\\n", "\n")));
