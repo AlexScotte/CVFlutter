@@ -1,7 +1,9 @@
+import 'package:cvflutter/helpers/toast_helper.dart';
 import 'package:cvflutter/managers/data_manager.dart';
 import 'package:cvflutter/managers/local_database_manager.dart';
 import 'package:cvflutter/model/formation.dart';
 import 'package:cvflutter/persistence/repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 final formationBloc = FormationBloc();
@@ -14,7 +16,7 @@ class FormationBloc {
   Observable<List<Formation>> get formations => _fetcher.stream;
   bool isFetching = false;
 
-  fetchFormations() async {
+  fetchFormations(BuildContext context) async {
     if (isFetching) return;
     isFetching = true;
 
@@ -36,6 +38,11 @@ class FormationBloc {
       }
     } else {
       formations = await LocalDatabaseManager().getFormations();
+      if (formations == null || formations.isEmpty) {
+        ToastHelper.showToastNoData(context);
+      } else {
+        ToastHelper.showToastNoConnection(context);
+      }
     }
 
     isFetching = false;

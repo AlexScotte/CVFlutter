@@ -19,7 +19,7 @@ class _ContactPageState extends State<ContactPage> {
   ContactBloc _contactBloc = ContactBloc();
   @override
   Widget build(BuildContext context) {
-    _contactBloc.fetchContact();
+    _contactBloc.fetchContact(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(

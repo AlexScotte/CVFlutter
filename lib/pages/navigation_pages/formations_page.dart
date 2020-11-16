@@ -20,7 +20,7 @@ class _FormationsPageState extends State<FormationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    _formationBloc.fetchFormations();
+    _formationBloc.fetchFormations(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(

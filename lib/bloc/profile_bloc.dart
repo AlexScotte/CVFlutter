@@ -1,7 +1,9 @@
+import 'package:cvflutter/helpers/toast_helper.dart';
 import 'package:cvflutter/managers/data_manager.dart';
 import 'package:cvflutter/managers/local_database_manager.dart';
 import 'package:cvflutter/model/profile.dart';
 import 'package:cvflutter/persistence/repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 final profileBloc = ProfileBloc();
@@ -14,7 +16,7 @@ class ProfileBloc {
   Observable<Profile> get profile => _fetcher.stream;
   bool isFetching = false;
 
-  fetchProfile() async {
+  fetchProfile(BuildContext context) async {
     // Avoid to create or get data several time when widget is building
     if (isFetching) return;
     isFetching = true;
@@ -22,6 +24,7 @@ class ProfileBloc {
 
     var isNetworkConnected = await DataManager().checkConnection();
     if (isNetworkConnected) {
+      /* Connected */
       if (DataManager().isLatestLocalDataVersion == null) {
         // Init and check version when  user opens the app the first time without connection
         //and enables it after
@@ -37,7 +40,13 @@ class ProfileBloc {
         }
       }
     } else {
+      /* No Connected */
       profile = await this._getLocalDataProfile();
+      if (profile == null) {
+        ToastHelper.showToastNoData(context);
+      } else {
+        ToastHelper.showToastNoConnection(context);
+      }
     }
 
     isFetching = false;

@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    _profileBloc.fetchProfile();
+    _profileBloc.fetchProfile(context);
 
     return Scaffold(
         appBar: AppBar(

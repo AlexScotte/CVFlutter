@@ -1,7 +1,9 @@
+import 'package:cvflutter/helpers/toast_helper.dart';
 import 'package:cvflutter/managers/data_manager.dart';
 import 'package:cvflutter/managers/local_database_manager.dart';
 import 'package:cvflutter/model/company.dart';
 import 'package:cvflutter/persistence/repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 final profileBloc = ExperiencesBloc();
@@ -13,7 +15,7 @@ class ExperiencesBloc {
 
   Observable<List<Company>> get companies => _fetcher.stream;
   bool isFetching = false;
-  Future<void> fetchCompanies() async {
+  Future<void> fetchCompanies(BuildContext context) async {
     // Avoid to create or get data several time when widget is building
     if (isFetching) return;
     isFetching = true;
@@ -36,6 +38,11 @@ class ExperiencesBloc {
       }
     } else {
       companies = await this._getLocalDataCompanies();
+      if (companies == null || companies.isEmpty) {
+        ToastHelper.showToastNoData(context);
+      } else {
+        ToastHelper.showToastNoConnection(context);
+      }
     }
     _fetcher.sink.add(companies);
   }

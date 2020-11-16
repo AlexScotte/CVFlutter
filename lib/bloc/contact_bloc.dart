@@ -1,7 +1,9 @@
+import 'package:cvflutter/helpers/toast_helper.dart';
 import 'package:cvflutter/managers/data_manager.dart';
 import 'package:cvflutter/managers/local_database_manager.dart';
 import 'package:cvflutter/model/contact.dart';
 import 'package:cvflutter/persistence/repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 final contactBloc = ContactBloc();
@@ -14,7 +16,7 @@ class ContactBloc {
   Observable<Contact> get contact => _fetcher.stream;
   bool isFetching = false;
 
-  fetchContact() async {
+  fetchContact(BuildContext context) async {
     if (isFetching) return;
     isFetching = true;
 
@@ -36,6 +38,11 @@ class ContactBloc {
       }
     } else {
       contact = await this._getLocalDataContact();
+      if (contact == null) {
+        ToastHelper.showToastNoData(context);
+      } else {
+        ToastHelper.showToastNoConnection(context);
+      }
     }
 
     isFetching = false;

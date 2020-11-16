@@ -43,7 +43,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_companies == null) _xpBloc.fetchCompanies();
+    if (_companies == null) _xpBloc.fetchCompanies(context);
 
     if (!_isSearching) {
       _appBarTitle = Text(
